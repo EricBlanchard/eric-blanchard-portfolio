@@ -1,0 +1,12 @@
+.next
+node_modules
+coverage
+reports
+public/storybook
+public/reports
+storybook-static
+test-results
+package-lock.json
+generated/quality.json
+next-env.d.ts
+!.storybook

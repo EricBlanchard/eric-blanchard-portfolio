@@ -7,3 +7,15 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Project rules
+
+This is Eric Blanchard's portfolio. It is also a showcase of the pipeline, so the rules below are part of the product.
+
+- **Static only.** The root layout sets `ensureStatic = "navigation"`. Do not add request-time APIs (`cookies()`, `headers()`, uncached fetches). If the build fails on this, fix the code, not the setting.
+- **Server Components by default.** Add `"use client"` only when a component truly needs the browser, and justify it in the PR. The home page JavaScript budget is 150 kB compressed.
+- **Content is data.** Projects live in `content/projects.ts`. Copy should be plain, specific and true; never invent metrics.
+- **Every component gets a story.** New files in `components/` need a `*.stories.tsx` with the meaningful states and a `play` check. Stories fail on any axe violation.
+- **Pure logic gets unit tests** next to the file (`*.test.ts`). Coverage thresholds are enforced in `vitest.config.ts`.
+- **Design tokens** live in `app/globals.css`. Use the Tailwind tokens (`text-ink`, `bg-paper`, `text-spruce`…), not raw colours. Amber (`sun`) is for the solar array and focus rings only.
+- **Before opening a PR,** run `npm run verify`. CI runs the same steps.

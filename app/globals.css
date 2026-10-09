@@ -1,26 +1,168 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens. Light by default, dark from the OS setting.
+ * Palette: survey-map paper, chart ink, spruce for interactive text,
+ * sun amber reserved for the solar array and focus rings.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --paper: #f1f3ee;
+  --paper-sunk: #e5e9e1;
+  --ink: #12223a;
+  --muted: #4c5a63;
+  --line: #c6cfc7;
+  --spruce: #1b6a55;
+  --sun: #e39a2d;
+  --water: #b4cad2;
+  --land: #d8ded1;
+  --forest: #a9bfa6;
+  --panel: #1f3552;
+  color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --paper: #0f1a2b;
+    --paper-sunk: #16243a;
+    --ink: #e6ebe4;
+    --muted: #a3b0b6;
+    --line: #2a3b53;
+    --spruce: #6cc9a9;
+    --sun: #f0ac45;
+    --water: #1b4566;
+    --land: #253549;
+    --forest: #284438;
+    --panel: #3a5578;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-sunk: var(--paper-sunk);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-spruce: var(--spruce);
+  --color-sun: var(--sun);
+  --font-display: var(--font-display-face), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
+  --breakpoint-xs: 30rem;
+}
+
+@layer base {
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-feature-settings: "ss01", "kern";
+  }
+
+  ::selection {
+    background: var(--sun);
+    color: #12223a;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--sun);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  /* The display face, used large. Big Shoulders is narrow, so it can be very big. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 0.86;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  .prose-measure {
+    max-width: 38rem;
+  }
+
+  .link {
+    color: var(--spruce);
+    text-decoration-line: underline;
+  }
+  .link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* Hex field tiles. Each tile reveals once, staggered by --d. */
+  .hex-tile {
+    animation: hex-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: var(--d, 0ms);
+  }
+  .hex-tile[data-kind="water"] {
+    fill: var(--water);
+  }
+  .hex-tile[data-kind="land"] {
+    fill: var(--land);
+  }
+  .hex-tile[data-kind="forest"] {
+    fill: var(--forest);
+  }
+  .hex-tile[data-kind="panel"] {
+    fill: var(--panel);
+    animation-name: hex-in, panel-charge;
+    animation-duration: 700ms, 900ms;
+    animation-delay: var(--d, 0ms), calc(var(--d, 0ms) + 500ms);
+    animation-fill-mode: both, forwards;
+  }
+
+  @keyframes hex-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes panel-charge {
+    0% {
+      fill: var(--panel);
+    }
+    40% {
+      fill: var(--sun);
+    }
+    100% {
+      fill: var(--panel);
+    }
+  }
+
+  .hex-still {
+    animation: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hex-tile,
+    .hex-tile[data-kind="panel"] {
+      animation: none;
+    }
+  }
 }

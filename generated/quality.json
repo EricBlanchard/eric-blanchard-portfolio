@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-10-09T14:32:07.533Z",
+  "commit": null,
+  "runUrl": null,
+  "unit": {
+    "tests": 70,
+    "passed": 70,
+    "files": 17
+  },
+  "coverage": {
+    "lines": 100,
+    "statements": 97.9,
+    "functions": 92.3,
+    "branches": 99.1
+  },
+  "stories": {
+    "count": 31,
+    "components": 13
+  },
+  "e2e": {
+    "tests": 43,
+    "passed": 43
+  },
+  "a11y": {
+    "pages": 9,
+    "violations": 0
+  },
+  "lighthouse": {
+    "performance": 0.98,
+    "accessibility": 1,
+    "bestPractices": 1,
+    "seo": 1
+  },
+  "homeJsKb": 136.4
+}

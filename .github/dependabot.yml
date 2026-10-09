@@ -1,0 +1,43 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: America/Toronto
+    open-pull-requests-limit: 10
+    labels: [dependencies]
+    # Related packages move together so one PR is tested as a set.
+    groups:
+      next-and-react:
+        patterns: [next, eslint-config-next, react, react-dom, "@types/react", "@types/react-dom"]
+      storybook:
+        patterns: [storybook, "@storybook/*", eslint-plugin-storybook]
+      testing:
+        patterns:
+          [
+            vitest,
+            "@vitest/*",
+            playwright,
+            "@playwright/test",
+            "@testing-library/*",
+            jsdom,
+            "@axe-core/*",
+            "@lhci/cli",
+          ]
+      tooling:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: America/Toronto
+    labels: [dependencies]
+    groups:
+      actions:
+        patterns: ["*"]
