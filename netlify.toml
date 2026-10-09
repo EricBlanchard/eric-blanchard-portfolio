@@ -1,0 +1,11 @@
+# Deploys are driven by GitHub Actions (see .github/workflows/ci.yml), which runs
+# `netlify deploy --build` only after every check has passed.
+# In the Netlify UI, set Build settings > Build status to "Stopped" so pushes
+# don't trigger a second, unchecked build.
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "24"
+  NEXT_TELEMETRY_DISABLED = "1"

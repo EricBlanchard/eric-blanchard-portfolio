@@ -1,0 +1,52 @@
+import { Meta, ColorPalette, ColorItem, Typeset } from "@storybook/addon-docs/blocks";
+
+<Meta title="Introduction" />
+
+# Eric Blanchard: component library
+
+These are the building blocks of [the portfolio site](/). Every story here is also a test:
+the pipeline renders each one in Chromium, runs its interaction checks, and fails the build on
+any accessibility violation found by axe.
+
+## Principles
+
+- **Static first.** Components are Server Components unless they need the browser. None of them do yet.
+- **Content is data.** Projects live in `content/projects.ts`, typed, and validated by unit tests.
+- **One bold thing per page.** The display type and the hex map carry the personality; everything else stays quiet.
+
+## Colour
+
+Light values shown. Dark mode swaps every token through `prefers-color-scheme`.
+
+<ColorPalette>
+  <ColorItem title="Paper" subtitle="Background" colors={{ paper: "#f1f3ee", sunk: "#e5e9e1" }} />
+  <ColorItem
+    title="Ink"
+    subtitle="Text"
+    colors={{ ink: "#12223a", muted: "#4c5a63", line: "#c6cfc7" }}
+  />
+  <ColorItem title="Spruce" subtitle="Links and interactive text" colors={{ spruce: "#1b6a55" }} />
+  <ColorItem title="Sun" subtitle="Solar array and focus rings only" colors={{ sun: "#e39a2d" }} />
+  <ColorItem
+    title="Map"
+    subtitle="Hex terrain"
+    colors={{ water: "#b4cad2", land: "#d8ded1", forest: "#a9bfa6", panel: "#1f3552" }}
+  />
+</ColorPalette>
+
+## Type
+
+Big Shoulders for display, used large and tight. Instrument Sans for everything else.
+
+<Typeset
+  fontFamily="var(--font-display-face), 'Arial Narrow', sans-serif"
+  fontWeight={800}
+  fontSizes={[96, 64, 48, 36]}
+  sampleText="Selected work"
+/>
+
+<Typeset
+  fontFamily="var(--font-body-face), system-ui, sans-serif"
+  fontSizes={[20, 17, 15, 14]}
+  sampleText="I build fast, well-tested software."
+/>

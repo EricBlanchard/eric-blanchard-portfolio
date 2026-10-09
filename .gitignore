@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# quality reports (generated in CI; the summary lives in generated/quality.json)
+/reports
+/test-results
+/.lighthouseci
+/public/storybook
+/public/reports
+/storybook-static
+*storybook.log
