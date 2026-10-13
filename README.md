@@ -50,7 +50,7 @@ pull request ─▶ lint, types, format ─▶ unit + story tests (coverage) ─
 
 1. Create the GitHub repository and push `main`.
 2. On Netlify, create a site (no Git connection needed, or set **Build status: Stopped** if connected). Copy the **Site ID** and create a **personal access token**.
-3. In the GitHub repository settings add secrets `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID`, and a variable `SITE_URL` (the public URL, used for canonical links and the sitemap).
+3. In the GitHub repository settings add secrets `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID`. The public URL defaults to `https://ericblanchard.ca`; set a `SITE_URL` variable only to override it.
 4. Run `scripts/setup-github.sh` once (needs the GitHub CLI). It enables auto-merge, Dependabot security updates, and branch protection that requires `Verify` to pass.
 
 ## Adding a project
