@@ -19,8 +19,9 @@ permissions:
 
 env:
   NEXT_TELEMETRY_DISABLED: "1"
-  # Optional. Unset variables arrive as "", which content/site.ts ignores.
-  SITE_URL: ${{ vars.SITE_URL }}
+  # Public origin for canonical links, the sitemap and social previews.
+  # Override with the SITE_URL repository variable if the domain ever changes.
+  SITE_URL: ${{ vars.SITE_URL || 'https://ericblanchard.ca' }}
 
 jobs:
   verify:
