@@ -50,7 +50,7 @@ export function pipelineSteps(q: QualityReport): PipelineStep[] {
     {
       title: "Performance budget",
       body: "Lighthouse runs against the production build. A score below budget fails the pipeline.",
-      tools: "Lighthouse CI",
+      tools: "Lighthouse",
       result:
         q.lighthouse.performance === null
           ? null

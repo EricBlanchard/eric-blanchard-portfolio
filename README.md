@@ -12,7 +12,7 @@ The site is its own case study. The pipeline that builds it measures it, and the
 - **Vitest** for unit tests, and Storybook stories run as browser tests via `@storybook/addon-vitest`
 - **Storybook 10**, published with the site at `/storybook`
 - **Playwright** + **axe** for end-to-end and accessibility tests, light and dark
-- **Lighthouse CI** with performance, accessibility and weight budgets
+- **Lighthouse** with performance, accessibility and weight budgets
 - **GitHub Actions** for CI/CD, **Netlify** for hosting, **Dependabot** + **CodeQL** for upkeep
 
 ## Commands
@@ -23,7 +23,7 @@ The site is its own case study. The pipeline that builds it measures it, and the
 | `npm run storybook`  | Component library on http://localhost:6006                                               |
 | `npm test`           | Unit tests and story tests                                                               |
 | `npm run e2e`        | Playwright against a production build (run `npm run build` first)                        |
-| `npm run lighthouse` | Lighthouse CI budgets against a production build                                         |
+| `npm run lighthouse` | Lighthouse budgets against a production build                                            |
 | `npm run verify`     | Everything CI runs, in order, ending with a build that includes the fresh quality report |
 
 Storybook tests and Playwright need Chromium: `npx playwright install chromium`.

@@ -9,6 +9,11 @@ updates:
       timezone: America/Toronto
     open-pull-requests-limit: 10
     labels: [dependencies]
+    ignore:
+      # eslint-config-next's plugins (import, jsx-a11y, react) don't support ESLint 10 yet.
+      # Remove this once they do.
+      - dependency-name: eslint
+        update-types: [version-update:semver-major]
     # Related packages move together so one PR is tested as a set.
     groups:
       next-and-react:
@@ -25,7 +30,8 @@ updates:
             "@testing-library/*",
             jsdom,
             "@axe-core/*",
-            "@lhci/cli",
+            lighthouse,
+            chrome-launcher,
           ]
       tooling:
         update-types: [minor, patch]

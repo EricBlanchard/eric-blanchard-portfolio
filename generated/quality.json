@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-09T14:32:07.533Z",
+  "generatedAt": "2026-10-13T18:31:14.179Z",
   "commit": null,
   "runUrl": null,
   "unit": {
-    "tests": 70,
-    "passed": 70,
-    "files": 17
+    "tests": 79,
+    "passed": 79,
+    "files": 19
   },
   "coverage": {
     "lines": 100,
-    "statements": 97.9,
-    "functions": 92.3,
-    "branches": 99.1
+    "statements": 98.1,
+    "functions": 92.8,
+    "branches": 98.4
   },
   "stories": {
     "count": 31,
