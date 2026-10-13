@@ -62,7 +62,7 @@
     font-family: var(--font-sans);
     font-size: 1.0625rem;
     line-height: 1.6;
-    font-feature-settings: "ss01", "kern";
+    font-kerning: normal;
   }
 
   ::selection {

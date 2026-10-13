@@ -69,7 +69,7 @@ const a11y = {
 
 const perf = readJson("reports/perf.json");
 
-// Lighthouse CI: use each page's representative (median) run, then the lowest page, so we never overstate.
+// Lighthouse: use each page's representative (median) run, then the lowest page, so we never overstate.
 let lighthouse = { performance: null, accessibility: null, bestPractices: null, seo: null };
 const lhDir = join(root, "reports/lighthouse");
 if (existsSync(lhDir)) {

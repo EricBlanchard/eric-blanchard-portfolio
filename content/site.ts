@@ -1,3 +1,26 @@
+const LOCAL_URL = "http://localhost:3000";
+
+/**
+ * The public origin, for canonical links, the sitemap and social previews.
+ * Takes the first usable value: SITE_URL (set in CI), then URL (set by Netlify).
+ * Empty or malformed values are skipped. An unset GitHub variable arrives as "".
+ */
+export function resolveSiteUrl(
+  candidates: ReadonlyArray<string | undefined> = [process.env.SITE_URL, process.env.URL],
+): string {
+  for (const candidate of candidates) {
+    const value = candidate?.trim();
+    if (!value) continue;
+    try {
+      const url = new URL(value);
+      if (url.protocol === "https:" || url.protocol === "http:") return url.origin;
+    } catch {
+      // not a URL; try the next one
+    }
+  }
+  return LOCAL_URL;
+}
+
 /**
  * Site-wide facts. Anything marked `null` is optional and hidden when unset.
  */
@@ -7,8 +30,7 @@ export const site = {
   location: "Ontario, Canada",
   description:
     "Eric Blanchard builds fast, well-tested web apps, data dashboards and games, and runs the studio Deleptual.",
-  /** Set SITE_URL in CI; Netlify also provides URL during builds. */
-  url: process.env.SITE_URL ?? process.env.URL ?? "http://localhost:3000",
+  url: resolveSiteUrl(),
   /** Public contact address. Hidden until set. */
   email: null as string | null,
   links: {

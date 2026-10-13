@@ -19,6 +19,7 @@ permissions:
 
 env:
   NEXT_TELEMETRY_DISABLED: "1"
+  # Optional. Unset variables arrive as "", which content/site.ts ignores.
   SITE_URL: ${{ vars.SITE_URL }}
 
 jobs:

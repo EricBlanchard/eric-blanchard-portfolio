@@ -1,13 +1,13 @@
 import localFont from "next/font/local";
 
 /**
- * Self-hosted variable fonts (SIL Open Font License, see app/fonts/).
- * Self-hosting avoids a third-party request on first paint.
+ * Self-hosted fonts (SIL Open Font License, see app/fonts/), subset to the characters
+ * in lib/charset.ts by scripts/subset-fonts.py. Both together are under 30 kB.
  */
 export const displayFace = localFont({
-  src: "./fonts/BigShoulders-latin-wght.woff2",
+  src: "./fonts/BigShoulders-latin-800.woff2",
   variable: "--font-display-face",
-  weight: "100 900",
+  weight: "800",
   display: "swap",
   preload: true,
 });

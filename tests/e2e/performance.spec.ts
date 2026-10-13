@@ -40,6 +40,6 @@ test("fonts are self-hosted and preloaded", async ({ page }) => {
   const preloads = await page
     .locator('link[rel="preload"][as="font"]')
     .evaluateAll((links) => links.map((l) => l.getAttribute("href")));
-  expect(preloads.length).toBeGreaterThanOrEqual(2);
+  expect(preloads).toHaveLength(2);
   for (const href of preloads) expect(href).toMatch(/^\/_next\//);
 });
