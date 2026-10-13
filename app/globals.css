@@ -17,6 +17,7 @@
   --land: #d8ded1;
   --forest: #a9bfa6;
   --panel: #1f3552;
+  --danger: #b3261e;
   color-scheme: light dark;
 }
 
@@ -33,6 +34,7 @@
     --land: #253549;
     --forest: #284438;
     --panel: #3a5578;
+    --danger: #f2b8b5;
   }
 }
 
@@ -44,6 +46,7 @@
   --color-line: var(--line);
   --color-spruce: var(--spruce);
   --color-sun: var(--sun);
+  --color-danger: var(--danger);
   --font-display: var(--font-display-face), "Arial Narrow", sans-serif;
   --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
   --breakpoint-xs: 30rem;

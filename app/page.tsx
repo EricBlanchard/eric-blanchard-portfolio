@@ -22,8 +22,7 @@ export default function Home() {
             </h1>
             <p className="prose-measure mt-8 text-xl leading-relaxed">
               I build fast, well-tested software: web apps, data dashboards and games. I run a small
-              studio called Deleptual, and I am looking for a remote developer role with a Canadian
-              consultancy or a team working in renewable energy.
+              studio called Deleptual, and I am looking for a remote developer role.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="#work">See the work</ButtonLink>
@@ -105,13 +104,16 @@ export default function Home() {
               I would like to hear about it.
             </p>
             <ul className="mt-8 flex flex-wrap gap-3">
-              {site.email && (
-                <li>
-                  <ButtonLink href={`mailto:${site.email}`}>Email me</ButtonLink>
-                </li>
-              )}
               <li>
-                <ButtonLink href={site.links.linkedin} variant={site.email ? "quiet" : "primary"}>
+                <ButtonLink href="/contact">Send a message</ButtonLink>
+              </li>
+              <li>
+                <ButtonLink href={`mailto:${site.email}`} variant="quiet">
+                  Email me
+                </ButtonLink>
+              </li>
+              <li>
+                <ButtonLink href={site.links.linkedin} variant="quiet">
                   LinkedIn
                 </ButtonLink>
               </li>

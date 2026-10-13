@@ -6,7 +6,7 @@ const nav = [
   { href: "/#work", label: "Work" },
   { href: "/engineering", label: "Engineering" },
   { href: "/studio", label: "Studio" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/contact", label: "Contact" },
 ] as const;
 
 export function SiteHeader() {
