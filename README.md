@@ -53,6 +53,18 @@ pull request ─▶ lint, types, format ─▶ unit + story tests (coverage) ─
 3. In the GitHub repository settings add secrets `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID`. The public URL defaults to `https://ericblanchard.ca`; set a `SITE_URL` variable only to override it.
 4. Run `scripts/setup-github.sh` once (needs the GitHub CLI). It enables auto-merge, Dependabot security updates, and branch protection that requires `Verify` to pass.
 
+## Contact form
+
+`/contact` sends messages from the browser through [EmailJS](https://www.emailjs.com), to whatever address the EmailJS template sends to. The SDK only loads when someone presses **Send message**.
+
+1. In EmailJS, add an email service (your deleptual.ca mailbox or SendGrid) and note its **Service ID**.
+2. Create a template. Set **To Email** to `eric.blanchard@deleptual.ca` and **Reply To** to `{{reply_to}}`. The form fills `{{from_name}}`, `{{reply_to}}`, `{{company}}`, `{{topic}}` and `{{message}}`, for example with the subject `Portfolio: {{topic}} from {{from_name}}`.
+3. Under **Account → Security**, restrict the allowed origins to `https://ericblanchard.ca` (plus `http://localhost:3000` if you want to send from your machine).
+4. Add GitHub repository **variables** (not secrets) `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID` and `EMAILJS_PUBLIC_KEY`. Only the deploy job uses them.
+5. To try it locally, put the same values in `.env.local` as `NEXT_PUBLIC_EMAILJS_SERVICE_ID`, `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` and `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`.
+
+Spam protection: a hidden honeypot field, EmailJS's headless-browser blocking, a 30-second per-browser rate limit, and the origin allowlist. If the form can't send, it shows the email address instead.
+
 ## Adding a project
 
 Add an entry to `content/projects.ts`. Screenshots go in `public/work/<slug>/` and are listed in the project's `screenshots` array with alt text and dimensions; a unit test checks that every listed file exists.

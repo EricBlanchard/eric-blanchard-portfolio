@@ -24,6 +24,7 @@
     "publish-reports": "node scripts/publish-reports.mjs"
   },
   "dependencies": {
+    "@emailjs/browser": "^5.0.3",
     "next": "16.4.0",
     "react": "19.3.0",
     "react-dom": "19.3.0"

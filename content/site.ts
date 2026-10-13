@@ -31,8 +31,8 @@ export const site = {
   description:
     "Eric Blanchard builds fast, well-tested web apps, data dashboards and games, and runs the studio Deleptual.",
   url: resolveSiteUrl(),
-  /** Public contact address. Hidden until set. */
-  email: null as string | null,
+  /** Public contact address, also the fallback when the contact form can't send. */
+  email: "eric.blanchard@deleptual.ca",
   links: {
     linkedin: "https://www.linkedin.com/in/blanchard-eric",
     github: "https://github.com/EricBlanchard",

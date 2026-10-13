@@ -14,7 +14,7 @@ import lighthouse from "lighthouse";
 
 const PORT = 3300;
 const ORIGIN = `http://localhost:${PORT}`;
-const PAGES = ["/", "/engineering", "/work/step-contest"];
+const PAGES = ["/", "/engineering", "/work/step-contest", "/contact"];
 const RUNS = 3;
 const OUT = "reports/lighthouse";
 

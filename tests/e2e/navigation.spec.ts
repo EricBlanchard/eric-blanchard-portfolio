@@ -41,7 +41,8 @@ test("main navigation reaches each section", async ({ page }) => {
   await nav.getByRole("link", { name: "Studio" }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Deleptual");
   await nav.getByRole("link", { name: "Contact" }).click();
-  await expect(page.getByRole("heading", { name: "Let’s talk" })).toBeInViewport();
+  await expect(page).toHaveURL("/contact");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Contact");
 });
 
 test("keyboard users can skip straight to the content", async ({ page, isMobile }) => {

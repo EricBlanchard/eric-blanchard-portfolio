@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-10-13T18:31:14.179Z",
+  "generatedAt": "2026-10-14T01:03:53.449Z",
   "commit": null,
   "runUrl": null,
   "unit": {
-    "tests": 79,
-    "passed": 79,
-    "files": 19
+    "tests": 104,
+    "passed": 104,
+    "files": 22
   },
   "coverage": {
     "lines": 100,
-    "statements": 98.1,
-    "functions": 92.8,
-    "branches": 98.4
+    "statements": 98.4,
+    "functions": 94,
+    "branches": 99
   },
   "stories": {
-    "count": 31,
-    "components": 13
+    "count": 38,
+    "components": 14
   },
   "e2e": {
-    "tests": 43,
-    "passed": 43
+    "tests": 53,
+    "passed": 53
   },
   "a11y": {
-    "pages": 9,
+    "pages": 10,
     "violations": 0
   },
   "lighthouse": {
@@ -31,5 +31,5 @@
     "bestPractices": 1,
     "seo": 1
   },
-  "homeJsKb": 136.4
+  "homeJsKb": 139.1
 }

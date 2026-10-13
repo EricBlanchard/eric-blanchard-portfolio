@@ -11,7 +11,8 @@ function csp(options: { allowEval: boolean; frameAncestors: string }): string {
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob:",
     "font-src 'self' data:",
-    `connect-src 'self'${isDev ? " ws:" : ""}`,
+    // EmailJS receives contact form submissions.
+    `connect-src 'self' https://api.emailjs.com${isDev ? " ws:" : ""}`,
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
