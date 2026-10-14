@@ -28,7 +28,7 @@ gh api -X PUT "repos/$repo/branches/main/protection" --input - >/dev/null <<'JSO
 }
 JSON
 
-gh label create "needs review" --repo "$repo" --color FBCA04 --force >/dev/null
+gh label create "needs review" --repo "$repo" --color FBCA04 --description "Waiting for a human review" --force >/dev/null
 gh label create "dependencies" --repo "$repo" --color 0366D6 --force >/dev/null
 
 echo "Done. Now add NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID as repository secrets,"

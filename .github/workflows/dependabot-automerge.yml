@@ -4,6 +4,8 @@ on: pull_request
 
 permissions:
   contents: write
+  # Labels belong to the issues API.
+  issues: write
   pull-requests: write
 
 jobs:
@@ -29,6 +31,8 @@ jobs:
       - name: Flag major updates for review
         if: steps.meta.outputs.update-type == 'version-update:semver-major'
         run: |
+          # Create the label on first use (or refresh it), so this works before setup-github.sh runs.
+          gh label create "needs review" --color FBCA04 --description "Waiting for a human review" --force
           gh pr edit "$PR_URL" --add-label "needs review"
           gh pr comment "$PR_URL" --body "Major version update. CI will still run, but this one waits for a human review before merging."
         env:

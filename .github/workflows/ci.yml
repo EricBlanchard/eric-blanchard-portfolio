@@ -124,21 +124,42 @@ jobs:
       contents: read
       pull-requests: write
     steps:
+      # Until the Netlify secrets are added, skip deploying (with a note) instead of failing.
+      - name: Check Netlify credentials
+        id: netlify
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          if [ -n "$NETLIFY_AUTH_TOKEN" ] && [ -n "$NETLIFY_SITE_ID" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            msg="Skipping deploy: add NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID as repository secrets (Settings > Secrets and variables > Actions)."
+            echo "::warning::$msg"
+            echo "$msg" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
       - uses: actions/checkout@v5
+        if: steps.netlify.outputs.ready == 'true'
 
       - uses: actions/setup-node@v5
+        if: steps.netlify.outputs.ready == 'true'
         with:
           node-version-file: .nvmrc
           cache: npm
 
       - run: npm ci
+        if: steps.netlify.outputs.ready == 'true'
 
       - uses: actions/download-artifact@v5
+        if: steps.netlify.outputs.ready == 'true'
         with:
           name: site-inputs
 
       - name: Build and deploy to Netlify
         id: deploy
+        if: steps.netlify.outputs.ready == 'true'
         env:
           # Contact form settings. Public by design: they end up in the page's JavaScript,
           # and EmailJS restricts their use by allowed origin. They can live either in these
@@ -171,7 +192,7 @@ jobs:
           echo "Deployed to $url" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Comment preview link
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && steps.netlify.outputs.ready == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
