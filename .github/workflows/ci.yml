@@ -29,9 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -89,7 +89,7 @@ jobs:
 
       - name: Upload reports
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: reports
           path: |
@@ -98,7 +98,7 @@ jobs:
           retention-days: 14
 
       - name: Upload site inputs for deploy
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: site-inputs
           path: |
@@ -140,10 +140,10 @@ jobs:
             echo "$msg" >> "$GITHUB_STEP_SUMMARY"
           fi
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         if: steps.netlify.outputs.ready == 'true'
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v7
         if: steps.netlify.outputs.ready == 'true'
         with:
           node-version-file: .nvmrc
@@ -152,7 +152,7 @@ jobs:
       - run: npm ci
         if: steps.netlify.outputs.ready == 'true'
 
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v8
         if: steps.netlify.outputs.ready == 'true'
         with:
           name: site-inputs
