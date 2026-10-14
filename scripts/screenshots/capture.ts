@@ -18,6 +18,7 @@ import { chromium, type BrowserContext } from "playwright";
 import {
   VIEWPORTS,
   redactionPairs,
+  viewportFor,
   resolvePath,
   shotListProblems,
   shotUrl,
@@ -128,7 +129,7 @@ for (const slug of slugs) {
     const page = await context.newPage();
     try {
       const url = shotUrl(app.baseUrl, resolvePath(shot.path ?? "/", app.vars));
-      await page.setViewportSize(VIEWPORTS[shot.device]);
+      await page.setViewportSize(viewportFor(shot));
       await page.emulateMedia({ reducedMotion: "reduce" });
       await page.goto(url, { waitUntil: "networkidle", timeout: 45_000 });
       if (shot.click) {
@@ -148,6 +149,29 @@ for (const slug of slugs) {
         });
         await panel.scrollIntoViewIfNeeded();
         await page.waitForTimeout(800); // charts and map tiles finish drawing
+        // Sticky headers and banners would be painted over a tall panel; hide everything
+        // fixed or sticky outside it. Then report any table still too wide for the panel.
+        const clipped = await panel.evaluate((target) => {
+          for (const el of document.body.querySelectorAll<HTMLElement>("*")) {
+            const { position } = getComputedStyle(el);
+            if ((position === "fixed" || position === "sticky") && !target.contains(el)) {
+              el.style.setProperty("visibility", "hidden", "important");
+            }
+          }
+          return [...target.querySelectorAll<HTMLElement>("*")].filter((el) => {
+            const { overflowX } = getComputedStyle(el);
+            return (
+              (overflowX === "auto" || overflowX === "scroll") &&
+              el.scrollWidth > el.clientWidth + 1
+            );
+          }).length;
+        });
+        if (clipped > 0) {
+          console.warn(
+            `  warning ${shot.file}: ${clipped} table(s) are wider than the panel and will be cut off.` +
+              ` Give this shot a larger "width" in shots.json.`,
+          );
+        }
         await panel.screenshot({ path: target, animations: "disabled" });
       } else {
         await page.screenshot({

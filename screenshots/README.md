@@ -57,7 +57,7 @@ npm run screenshots:import
 
 This converts each inbox image into an optimized WebP in `public/work/<app>/` (at most 2400 px wide for desktop, 780 px for phone), strips image metadata, and updates `content/screenshots.generated.ts`. Project pages pick the images up from there, in the order of `shots.json`: desktop shots full width, phone shots side by side.
 
-A shot without alt text is not imported; the command says which ones. Once imported, the inbox can be emptied. Re-running the import keeps what's already in `public/work/`.
+A shot without alt text is not imported; the command says which ones. Once imported, the inbox can be emptied. Re-running the import keeps what's already in `public/work/`, and removes images for shots that have been taken out of `shots.json`.
 
 ## Adding a shot
 
@@ -71,6 +71,7 @@ Add an entry to the app's `shots` in `shots.json`:
 | `alt`      | What the image shows, for people who can't see it. Required                                         |
 | `caption`  | Optional line under the image                                                                       |
 | `section`  | Capture one panel instead of the screen: the section with this heading or label, e.g. `"Fleet map"` |
+| `width`    | Window width in CSS px, when a panel's table needs more room than 1440                              |
 | `fullPage` | Capture the whole scrolling page                                                                    |
 | `click`    | A CSS selector to click first, e.g. to open the first item in a list                                |
 
