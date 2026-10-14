@@ -138,11 +138,24 @@ for (const slug of slugs) {
       // Let realtime data, images and fonts settle.
       await page.waitForTimeout(1500);
       if (pairs.length > 0) await page.evaluate(swapNames, pairs);
-      await page.screenshot({
-        path: target,
-        fullPage: shot.fullPage ?? false,
-        animations: "disabled",
-      });
+      if (shot.section) {
+        // One panel: the region named by its heading or aria-label.
+        const panel = page.getByRole("region", { name: shot.section, exact: true }).first();
+        await panel.waitFor({ state: "visible", timeout: 20_000 }).catch(() => {
+          throw new Error(
+            `no panel named "${shot.section}" on ${url}. Check the heading text in shots.json.`,
+          );
+        });
+        await panel.scrollIntoViewIfNeeded();
+        await page.waitForTimeout(800); // charts and map tiles finish drawing
+        await panel.screenshot({ path: target, animations: "disabled" });
+      } else {
+        await page.screenshot({
+          path: target,
+          fullPage: shot.fullPage ?? false,
+          animations: "disabled",
+        });
+      }
       console.log(`  captured ${shot.file}`);
       captured++;
     } catch (error) {

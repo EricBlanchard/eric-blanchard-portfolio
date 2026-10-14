@@ -4,49 +4,95 @@
     "fleet-pulse": {
       "baseUrl": "https://enurgen-portfolio.netlify.app",
       "signIn": false,
-      "note": "Hosted demo. Synthetic data, nothing to hide. Update baseUrl if the Netlify site is renamed.",
+      "note": "Hosted demo with synthetic data. Each shot is one panel, picked by its heading, so images show the data rather than the page header. Update baseUrl if the Netlify site is renamed.",
       "shots": [
         {
-          "file": "asset-manager",
-          "path": "/?view=asset-manager",
-          "device": "desktop",
-          "alt": "Fleet Pulse asset manager dashboard: revenue earned and lost by site and cause, next to a map of the fleet.",
-          "caption": "Asset manager: is the portfolio earning what it should?"
-        },
-        {
-          "file": "engineer",
-          "path": "/?view=engineer",
-          "device": "desktop",
-          "alt": "PV engineer dashboard with a performance-index heatmap for every site and day.",
-          "caption": "PV engineer: why is this site underperforming?"
-        },
-        {
-          "file": "operations",
-          "path": "/?view=operations",
-          "device": "desktop",
-          "alt": "Operations dashboard with a dispatch queue ranked by revenue at stake per day.",
-          "caption": "Operations: what needs attention right now?"
-        },
-        {
-          "file": "executive",
+          "file": "headline-numbers",
           "path": "/?view=executive",
           "device": "desktop",
-          "alt": "Executive dashboard comparing revenue and energy with a P50 budget, with a month-end forecast.",
-          "caption": "Executive: are we on track, and where is the risk?"
+          "section": "Headline numbers",
+          "alt": "Executive headline numbers for the month to date: revenue and energy against budget, the month-end forecast and capacity online.",
+          "caption": "Executive: the month at a glance, against budget."
         },
         {
-          "file": "site-detail",
-          "path": "/?view=asset-manager",
-          "click": "a[href^='/sites/']",
+          "file": "budget-bridge",
+          "path": "/?view=executive",
           "device": "desktop",
-          "alt": "Detail page for a single solar site, with its strings, inverters and clipping.",
-          "caption": "One site in detail."
+          "section": "Budget to actual",
+          "alt": "A waterfall chart bridging budgeted revenue to actual revenue, splitting the gap into weather and operational causes.",
+          "caption": "Budget to actual: how much of the gap was weather, and how much was operations."
         },
         {
-          "file": "operations-phone",
+          "file": "revenue-vs-budget",
+          "path": "/?view=executive",
+          "device": "desktop",
+          "section": "Revenue against budget",
+          "alt": "Cumulative revenue for the month plotted against the P50 budget line, with a forecast to month end.",
+          "caption": "Revenue against a P50 budget, with a month-end forecast."
+        },
+        {
+          "file": "fleet-map",
+          "path": "/?view=asset-manager",
+          "device": "desktop",
+          "section": "Fleet map",
+          "alt": "Map of solar and battery sites across Canada and the US, each circle sized by the revenue the site has lost.",
+          "caption": "Asset manager: the fleet map, circles sized by lost revenue."
+        },
+        {
+          "file": "revenue-lost",
+          "path": "/?view=asset-manager",
+          "device": "desktop",
+          "section": "Where the revenue went",
+          "alt": "Breakdown of lost revenue by cause: inverter outages, curtailment, soiling, and offline or degraded strings.",
+          "caption": "Where the revenue went, by cause."
+        },
+        {
+          "file": "next-actions",
+          "path": "/?view=asset-manager",
+          "device": "desktop",
+          "section": "What to do next",
+          "alt": "Recommended actions for the asset manager: which sites to wash and which faults to investigate, with what each is worth.",
+          "caption": "What to do next: wash, wait or investigate, priced in dollars."
+        },
+        {
+          "file": "performance-heatmap",
+          "path": "/?view=engineer",
+          "device": "desktop",
+          "section": "Performance by site and day",
+          "alt": "Heatmap of the performance index for every site and day of the selected range.",
+          "caption": "PV engineer: performance index for every site and day."
+        },
+        {
+          "file": "shortfall",
+          "path": "/?view=engineer",
+          "device": "desktop",
+          "section": "Where each site's shortfall goes",
+          "alt": "For each site, the gap between expected and actual energy split into loss causes, including the part the model can't explain.",
+          "caption": "Where each site's shortfall goes, including what the model can't explain."
+        },
+        {
+          "file": "dispatch-queue",
+          "path": "/?view=operations",
+          "device": "desktop",
+          "section": "Dispatch queue",
+          "alt": "The operations dispatch queue: equipment problems ranked by revenue at stake per day, marked as still down or recovered.",
+          "caption": "Operations: the dispatch queue, ranked by revenue at stake."
+        },
+        {
+          "file": "soiling-rain",
+          "path": "/?view=asset-manager",
+          "device": "desktop",
+          "section": "Soiling and rain",
+          "alt": "One site's daily losses to soiling shown alongside daily rainfall.",
+          "caption": "One site: soiling losses against rainfall.",
+          "click": "a[href^='/sites/']"
+        },
+        {
+          "file": "dispatch-queue-phone",
           "path": "/?view=operations",
           "device": "phone",
-          "alt": "The operations dashboard on a phone.",
+          "section": "Dispatch queue",
+          "alt": "The dispatch queue on a phone.",
           "caption": "The dashboards work on a phone too."
         }
       ]

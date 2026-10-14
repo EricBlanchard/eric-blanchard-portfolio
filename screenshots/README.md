@@ -25,6 +25,8 @@ The capture script prefers your installed Google Chrome, because Google sign-in 
 
 Running it without an app name captures every app that has a `baseUrl`.
 
+For dashboards, capture panels rather than screens: give a shot a `section` (the panel's heading) and the image is cropped to that panel, scrolled into view, so it shows the data instead of the page header. Fleet Pulse's shots all work this way.
+
 ## Keeping real people out of screenshots
 
 Daric, the step contest and the studio simulator hold real people's data. In order of preference:
@@ -61,14 +63,15 @@ A shot without alt text is not imported; the command says which ones. Once impor
 
 Add an entry to the app's `shots` in `shots.json`:
 
-| Field      | Meaning                                                                   |
-| ---------- | ------------------------------------------------------------------------- |
-| `file`     | Output name: lowercase letters, numbers and hyphens                       |
-| `path`     | Page to open, starting with `/`. `{name}` is filled from the app's `vars` |
-| `device`   | `desktop` or `phone`                                                      |
-| `alt`      | What the image shows, for people who can't see it. Required               |
-| `caption`  | Optional line under the image                                             |
-| `fullPage` | Capture the whole scrolling page                                          |
-| `click`    | A CSS selector to click first, e.g. to open the first item in a list      |
+| Field      | Meaning                                                                                             |
+| ---------- | --------------------------------------------------------------------------------------------------- |
+| `file`     | Output name: lowercase letters, numbers and hyphens                                                 |
+| `path`     | Page to open, starting with `/`. `{name}` is filled from the app's `vars`                           |
+| `device`   | `desktop` or `phone`                                                                                |
+| `alt`      | What the image shows, for people who can't see it. Required                                         |
+| `caption`  | Optional line under the image                                                                       |
+| `section`  | Capture one panel instead of the screen: the section with this heading or label, e.g. `"Fleet map"` |
+| `fullPage` | Capture the whole scrolling page                                                                    |
+| `click`    | A CSS selector to click first, e.g. to open the first item in a list                                |
 
 A unit test checks the shot list on every run of `npm test`.

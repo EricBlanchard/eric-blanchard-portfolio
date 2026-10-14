@@ -14,6 +14,11 @@ export interface Shot {
   caption?: string;
   /** Capture the whole scrolling page instead of one screen. */
   fullPage?: boolean;
+  /**
+   * Capture just one panel: the region (a <section> with a heading or aria-label) with this
+   * accessible name, e.g. "Fleet map". Scrolled into view first.
+   */
+  section?: string;
   /** Click this selector before capturing, e.g. to open the first item in a list. */
   click?: string;
 }
@@ -57,6 +62,10 @@ export function shotListProblems(list: ShotList): string[] {
         problems.push(`${where}: device must be "desktop" or "phone".`);
       if (!app.manual && !shot.path?.startsWith("/"))
         problems.push(`${where}: path must start with "/".`);
+      if (shot.section !== undefined && !shot.section.trim())
+        problems.push(`${where}: section can't be empty.`);
+      if (shot.section && shot.fullPage)
+        problems.push(`${where}: use section or fullPage, not both.`);
     }
   }
   return problems;
