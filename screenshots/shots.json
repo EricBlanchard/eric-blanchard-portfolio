@@ -132,87 +132,112 @@
     "step-contest": {
       "baseUrl": "",
       "signIn": true,
-      "vars": {
-        "contestId": ""
-      },
-      "note": "Use a demo contest, and list real names in screenshots/redactions.local.json so they're swapped for demo names. Set vars.contestId to that contest's id.",
+      "manual": true,
+      "folders": ["steps"],
+      "note": "Taken by hand from a demo contest (Alex, Blake, Dev and Avery are demo accounts). Log steps is left out until its button stops covering the date field; contest settings is left out because it shows a live invite code; the full-page captures are too tall for the gallery.",
+      "skip": [
+        "steps/desktop/01-dashboard.png",
+        "steps/desktop/02-dashboard-past-contests.png",
+        "steps/desktop/04-contest-leaderboard-per-day.png",
+        "steps/desktop/05-contest-full-page.png",
+        "steps/desktop/06-activity-feed.png",
+        "steps/desktop/08-log-steps.png",
+        "steps/desktop/09-contest-settings.png",
+        "steps/desktop/10-new-contest.png",
+        "steps/desktop/11-join-with-code.png",
+        "steps/mobile/01-dashboard.png",
+        "steps/mobile/05-contest-full-page.png",
+        "steps/mobile/08-log-steps.png",
+        "steps/mobile/09-contest-settings.png"
+      ],
       "shots": [
         {
-          "file": "dashboard",
-          "path": "/dashboard",
-          "device": "phone",
-          "alt": "Step contest home screen on a phone, listing the contests you're in.",
-          "caption": "Home: your contests at a glance."
+          "file": "leaderboard-desktop",
+          "source": "steps/desktop/03-contest-leaderboard.png",
+          "device": "desktop",
+          "alt": "A step contest on a desktop screen: a button to log today's steps, then standings for five people with their step totals, best days and how far each is behind the leader.",
+          "caption": "The leaderboard: totals, best days and the gap to the person ahead."
         },
         {
           "file": "leaderboard",
-          "path": "/contests/{contestId}",
+          "source": "steps/mobile/03-contest-leaderboard.png",
           "device": "phone",
-          "alt": "A contest leaderboard on a phone, with step totals, streaks and the gap to the person above.",
+          "alt": "The contest leaderboard on a phone, ranking five walkers by total steps with each person's best day and their gap to the leader.",
           "caption": "The leaderboard updates the moment anyone logs."
         },
         {
-          "file": "log",
-          "path": "/contests/{contestId}/log",
-          "device": "phone",
-          "alt": "Logging a day's steps on a phone: a date, a number and an optional screenshot.",
-          "caption": "Logging a day: two taps and a number."
-        },
-        {
           "file": "feed",
-          "path": "/contests/{contestId}/feed",
+          "source": "steps/mobile/06-activity-feed.png",
           "device": "phone",
-          "alt": "The contest activity feed on a phone.",
+          "alt": "The contest activity feed on a phone: each day's entries with step counts, a short note, reactions and comments.",
           "caption": "The feed keeps the group talking."
         },
         {
-          "file": "leaderboard-desktop",
-          "path": "/contests/{contestId}",
+          "file": "my-log",
+          "source": "steps/mobile/07-my-log.png",
+          "device": "phone",
+          "alt": "My log on a phone: total steps, daily average, rank and streak, a bar chart of steps per day, and the days still missing an entry.",
+          "caption": "Missed days are listed, so you can catch up."
+        },
+        {
+          "file": "new-contest",
+          "source": "steps/mobile/10-new-contest.png",
+          "device": "phone",
+          "alt": "Creating a contest on a phone: name, description, start and end dates, time zone, maximum participants and catch-up days.",
+          "caption": "Setting up a contest: dates, time zone and catch-up days."
+        },
+        {
+          "file": "my-log-desktop",
+          "source": "steps/desktop/07-my-log.png",
           "device": "desktop",
-          "alt": "The contest leaderboard on a desktop screen, with the cumulative race chart.",
-          "caption": "On a bigger screen, the race chart shows the whole contest."
+          "alt": "My log on a desktop screen: total steps, daily average, rank and streak above a bar chart of steps for each day of the contest, with a dashed line at the average.",
+          "caption": "Every day of the contest at a glance."
         }
       ]
     },
     "daric": {
       "baseUrl": "",
       "signIn": true,
-      "note": "Private household data: keep to lists, tasks and the garden. People and Weight are left out on purpose. Use redactions.local.json for any names that show.",
+      "manual": true,
+      "note": "Private household app, taken by hand. Only screens with nothing personal on them are published. The others show real names, photos, notes or body weight; recapture them with names swapped (screenshots/redactions.local.json) before taking them out of skip.",
+      "skip": [
+        "daric/00-contact-sheet.png",
+        "daric/01-sign-in.png",
+        "daric/02-home.png",
+        "daric/02-home-full.png",
+        "daric/03-today.png",
+        "daric/03-today-full.png",
+        "daric/04-groceries.png",
+        "daric/05-hardware.png",
+        "daric/06-tasks.png",
+        "daric/07-notes.png",
+        "daric/08-people.png",
+        "daric/09-gym.png",
+        "daric/10-weight.png",
+        "daric/10-weight-full.png",
+        "daric/10b-weight-chart.png"
+      ],
       "shots": [
         {
-          "file": "home",
-          "path": "/",
-          "device": "phone",
-          "alt": "Daric's home screen on a phone: a tile for each module.",
-          "caption": "Every part of Daric is a module with its own tile."
-        },
-        {
-          "file": "today",
-          "path": "/today",
-          "device": "phone",
-          "alt": "Daric's Today page on a phone, with the weather, today's tasks and reminders.",
-          "caption": "Today mirrors the 6am digest."
-        },
-        {
-          "file": "grocery",
-          "path": "/grocery",
-          "device": "phone",
-          "alt": "A shared grocery list on a phone.",
-          "caption": "Lists sync live between both phones."
-        },
-        {
-          "file": "tasks",
-          "path": "/tasks",
-          "device": "phone",
-          "alt": "Shared tasks on a phone, colour coded by who they're assigned to.",
-          "caption": "Tasks for either of us, or anyone."
-        },
-        {
           "file": "garden",
-          "path": "/garden",
+          "source": "daric/11-garden.png",
           "device": "phone",
-          "alt": "The garden module on a phone, tracking crops by growth stage.",
-          "caption": "The garden module."
+          "alt": "Daric's garden module on a phone: this week's garlic planting steps for the coming season, under a photo of garlic bulbs ready to plant.",
+          "caption": "The garden module plans the season week by week."
+        },
+        {
+          "file": "garlic-guide",
+          "source": "daric/12-garden-garlic-guide.png",
+          "device": "phone",
+          "alt": "A garlic growing guide for southern Ontario on a phone: what to do right now, when roots will form, and a button to start this year's crop.",
+          "caption": "Growing guides are written for our climate zone."
+        },
+        {
+          "file": "settings",
+          "source": "daric/13-settings.png",
+          "device": "phone",
+          "alt": "Daric's settings on a phone: a switch for each module on the home screen, including Today, Groceries, Hardware, Tasks, Notes, People, Gym and Weight.",
+          "caption": "Each phone chooses which modules it shows."
         }
       ]
     },

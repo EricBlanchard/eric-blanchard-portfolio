@@ -91,5 +91,81 @@ export const generatedScreenshots: Record<string, Screenshot[]> = {
       "device": "phone",
       "caption": "The dashboards work on a phone too."
     }
+  ],
+  "step-contest": [
+    {
+      "src": "/work/step-contest/leaderboard-desktop.webp",
+      "alt": "A step contest on a desktop screen: a button to log today's steps, then standings for five people with their step totals, best days and how far each is behind the leader.",
+      "width": 2400,
+      "height": 1500,
+      "device": "desktop",
+      "caption": "The leaderboard: totals, best days and the gap to the person ahead."
+    },
+    {
+      "src": "/work/step-contest/leaderboard.webp",
+      "alt": "The contest leaderboard on a phone, ranking five walkers by total steps with each person's best day and their gap to the leader.",
+      "width": 780,
+      "height": 1688,
+      "device": "phone",
+      "caption": "The leaderboard updates the moment anyone logs."
+    },
+    {
+      "src": "/work/step-contest/feed.webp",
+      "alt": "The contest activity feed on a phone: each day's entries with step counts, a short note, reactions and comments.",
+      "width": 780,
+      "height": 1688,
+      "device": "phone",
+      "caption": "The feed keeps the group talking."
+    },
+    {
+      "src": "/work/step-contest/my-log.webp",
+      "alt": "My log on a phone: total steps, daily average, rank and streak, a bar chart of steps per day, and the days still missing an entry.",
+      "width": 780,
+      "height": 1688,
+      "device": "phone",
+      "caption": "Missed days are listed, so you can catch up."
+    },
+    {
+      "src": "/work/step-contest/new-contest.webp",
+      "alt": "Creating a contest on a phone: name, description, start and end dates, time zone, maximum participants and catch-up days.",
+      "width": 780,
+      "height": 1688,
+      "device": "phone",
+      "caption": "Setting up a contest: dates, time zone and catch-up days."
+    },
+    {
+      "src": "/work/step-contest/my-log-desktop.webp",
+      "alt": "My log on a desktop screen: total steps, daily average, rank and streak above a bar chart of steps for each day of the contest, with a dashed line at the average.",
+      "width": 2400,
+      "height": 1500,
+      "device": "desktop",
+      "caption": "Every day of the contest at a glance."
+    }
+  ],
+  "daric": [
+    {
+      "src": "/work/daric/garden.webp",
+      "alt": "Daric's garden module on a phone: this week's garlic planting steps for the coming season, under a photo of garlic bulbs ready to plant.",
+      "width": 749,
+      "height": 1624,
+      "device": "phone",
+      "caption": "The garden module plans the season week by week."
+    },
+    {
+      "src": "/work/daric/garlic-guide.webp",
+      "alt": "A garlic growing guide for southern Ontario on a phone: what to do right now, when roots will form, and a button to start this year's crop.",
+      "width": 749,
+      "height": 1624,
+      "device": "phone",
+      "caption": "Growing guides are written for our climate zone."
+    },
+    {
+      "src": "/work/daric/settings.webp",
+      "alt": "Daric's settings on a phone: a switch for each module on the home screen, including Today, Groceries, Hardware, Tasks, Notes, People, Gym and Weight.",
+      "width": 749,
+      "height": 1624,
+      "device": "phone",
+      "caption": "Each phone chooses which modules it shows."
+    }
   ]
 };

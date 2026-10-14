@@ -125,6 +125,7 @@ for (const slug of slugs) {
   const pairs = redactionPairs({ ...redactions["*"], ...redactions[slug] });
 
   for (const shot of app.shots) {
+    if (shot.source) continue; // taken by hand
     const target = join(outDir, `${shot.file}.png`);
     const page = await context.newPage();
     try {

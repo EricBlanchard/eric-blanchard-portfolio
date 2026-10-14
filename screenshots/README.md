@@ -47,7 +47,20 @@ Daric, the step contest and the studio simulator hold real people's data. In ord
 
 ## Taking screenshots by hand
 
-For Unity (Hexploration) or anything the script can't reach, save PNGs into `screenshots/inbox/<app>/` using the `file` names in `shots.json`, and write the `alt` text for each.
+For Unity (Hexploration), signed-in apps, or anything the script can't reach, save images anywhere under `screenshots/inbox/`, laid out however suits you:
+
+```
+screenshots/inbox/
+  daric/11-garden.png
+  steps/desktop/03-contest-leaderboard.png     "steps" is listed in step-contest's "folders"
+  steps/mobile/03-contest-leaderboard.png
+```
+
+- **App:** the first folder is the app's name in `shots.json`, or one of its `folders`.
+- **Device:** a `desktop` or `mobile` (or `phone`) folder anywhere in the path decides it. Without one, images narrower than 1300 px count as phone screenshots.
+- **Order:** a number at the front of the name (`03-…`) sets the order, folder by folder. It's dropped from the published name.
+
+Then run `npm run screenshots:import`. Any image not yet in `shots.json` is added to it, in that order, with its `source` and empty alt text, and the command lists them. Nothing is published until its alt text is written, so a screenshot can't go public by accident. For each new entry, either write the `alt` (and a `caption`), or move its path into the app's `skip` list if it shouldn't be published. The order of `shots` in `shots.json` is the order on the page; move entries to change it.
 
 ## Importing
 
@@ -74,5 +87,8 @@ Add an entry to the app's `shots` in `shots.json`:
 | `width`    | Window width in CSS px, when a panel's table needs more room than 1440                              |
 | `fullPage` | Capture the whole scrolling page                                                                    |
 | `click`    | A CSS selector to click first, e.g. to open the first item in a list                                |
+| `source`   | For a screenshot taken by hand: its path inside `screenshots/inbox/`. The import adds these for you |
+
+Per app, `folders` lists other inbox folder names for it, and `skip` lists inbox images never to publish.
 
 A unit test checks the shot list on every run of `npm test`.

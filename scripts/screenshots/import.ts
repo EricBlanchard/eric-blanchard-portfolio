@@ -1,20 +1,27 @@
 #!/usr/bin/env node
 /**
- * Turns screenshots/inbox/<slug>/<file>.(png|jpg|jpeg|webp) into optimized WebP files in
- * public/work/<slug>/, and writes content/screenshots.generated.ts, which the project
- * pages read. Only shots listed in screenshots/shots.json are imported, in that order,
- * and each needs alt text. Image metadata (location, device) is stripped.
+ * Turns images in screenshots/inbox/ into optimized WebP files in public/work/<slug>/, and
+ * writes content/screenshots.generated.ts, which the project pages read.
+ *
+ * The inbox can be laid out any way: a folder per app (or one of its `folders`, like
+ * "steps"), with subfolders such as desktop/ and mobile/. Images that aren't in
+ * screenshots/shots.json yet are added to it, ordered by folder and by the number at the
+ * front of their names, with empty alt text. Only shots with alt text are imported, in the
+ * order of shots.json. Image metadata (location, device) is stripped.
  *
  *   npm run screenshots:import
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, relative, sep } from "node:path";
+import * as prettier from "prettier";
 import sharp from "sharp";
 import {
   missingAlt,
   outputWidth,
+  planInbox,
   shotListProblems,
   type Device,
+  type InboxImage,
   type ShotList,
 } from "../../lib/screenshots.ts";
 
@@ -27,11 +34,51 @@ interface Entry {
   caption?: string;
 }
 
-const list = JSON.parse(readFileSync("screenshots/shots.json", "utf8")) as ShotList;
+const SHOTS = "screenshots/shots.json";
+const INBOX = join("screenshots", "inbox");
+
+const list = JSON.parse(readFileSync(SHOTS, "utf8")) as ShotList;
 const problems = shotListProblems(list);
 if (problems.length > 0) {
-  console.error("screenshots/shots.json has problems:\n  " + problems.join("\n  "));
+  console.error(`${SHOTS} has problems:\n  ` + problems.join("\n  "));
   process.exit(1);
+}
+
+/** Every image anywhere in the inbox, with its size. */
+async function readInbox(dir: string): Promise<InboxImage[]> {
+  if (!existsSync(dir)) return [];
+  const images: InboxImage[] = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true, recursive: true })) {
+    if (!entry.isFile() || !/\.(png|jpe?g|webp)$/i.test(entry.name)) continue;
+    const full = join(entry.parentPath, entry.name);
+    const { width = 0, height = 0 } = await sharp(full).metadata();
+    images.push({ path: relative(dir, full).split(sep).join("/"), width, height });
+  }
+  return images;
+}
+
+const plan = planInbox(list, await readInbox(INBOX));
+
+// New images join the shot list, in order, waiting for alt text.
+const newShots = Object.entries(plan.added);
+if (newShots.length > 0) {
+  for (const [slug, shots] of newShots) list.apps[slug]!.shots.push(...shots);
+  const text = await prettier.format(JSON.stringify(list), { parser: "json" });
+  writeFileSync(SHOTS, text);
+  console.log(`Added to ${SHOTS} (write alt text for each, or list it in the app's "skip"):`);
+  for (const [slug, shots] of newShots) {
+    for (const shot of shots)
+      console.log(`  ${slug}/${shot.file}  ←  ${shot.source}  (${shot.device})`);
+  }
+  console.log("");
+}
+if (plan.unknown.length > 0) {
+  console.warn(
+    "These images are in folders that don't match any app (add the folder name to that app's" +
+      ` "folders" in ${SHOTS}):\n  ` +
+      plan.unknown.join("\n  ") +
+      "\n",
+  );
 }
 
 const result: Record<string, Entry[]> = {};
@@ -41,9 +88,8 @@ let imported = 0;
 for (const [slug, app] of Object.entries(list.apps)) {
   const entries: Entry[] = [];
   for (const shot of app.shots) {
-    const source = ["png", "jpg", "jpeg", "webp"]
-      .map((ext) => join("screenshots", "inbox", slug, `${shot.file}.${ext}`))
-      .find((p) => existsSync(p));
+    const found = plan.sources.get(`${slug}/${shot.file}`);
+    const source = found ? join(INBOX, found) : undefined;
     const dest = join("public", "work", slug, `${shot.file}.webp`);
     const altProblem = missingAlt(slug, shot);
 
@@ -59,7 +105,7 @@ for (const [slug, app] of Object.entries(list.apps)) {
         .webp({ quality: 82, effort: 6 })
         .toFile(dest);
       imported++;
-      console.log(`imported ${slug}/${shot.file}`);
+      console.log(`imported ${slug}/${shot.file}  ←  ${found}`);
     }
 
     // Keep anything imported before, even if the inbox has been cleared since.
