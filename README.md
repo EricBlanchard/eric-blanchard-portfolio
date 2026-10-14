@@ -84,4 +84,8 @@ Spam protection: a hidden honeypot field, EmailJS's headless-browser blocking, a
 
 ## Adding a project
 
-Add an entry to `content/projects.ts`. Screenshots go in `public/work/<slug>/` and are listed in the project's `screenshots` array with alt text and dimensions; a unit test checks that every listed file exists.
+Add an entry to `content/projects.ts`. Client work, which has nothing public to show, lives in `content/clientWork.ts`.
+
+## Screenshots
+
+Screenshots are captured from the live apps on your own computer, reviewed, then imported as optimized WebP: see [screenshots/README.md](screenshots/README.md). In short: `npm run screenshots:capture -- <app>`, check `screenshots/inbox/`, then `npm run screenshots:import`.

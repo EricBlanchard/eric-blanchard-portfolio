@@ -7,8 +7,16 @@ const meta = {
   component: ScreenshotGallery,
   args: {
     shots: [
-      { src: "/icon.svg", alt: "The site icon", width: 64, height: 64, caption: "With a caption" },
-      { src: "/icon.svg", alt: "The site icon again", width: 64, height: 64 },
+      {
+        src: "/icon.svg",
+        alt: "A desktop screen",
+        width: 1440,
+        height: 900,
+        device: "desktop",
+        caption: "Desktop shots get the full width.",
+      },
+      { src: "/icon.svg", alt: "A phone screen", width: 390, height: 844, device: "phone" },
+      { src: "/icon.svg", alt: "Another phone screen", width: 390, height: 844, device: "phone" },
     ],
   },
 } satisfies Meta<typeof ScreenshotGallery>;
@@ -16,9 +24,20 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const TwoShots: Story = {
+export const DesktopAndPhones: Story = {
   play: async ({ canvasElement }) => {
-    await expect(within(canvasElement).getAllByRole("img")).toHaveLength(2);
+    const canvas = within(canvasElement);
+    await expect(canvas.getAllByRole("img")).toHaveLength(3);
+    await expect(canvas.getByText("Desktop shots get the full width.")).toBeVisible();
+    // Phones share a grid row; desktop shots don't.
+    const phone = canvas.getByAltText("A phone screen").closest("figure")!;
+    await expect(phone.parentElement?.className).toMatch(/grid/);
+  },
+};
+
+export const PhonesOnly: Story = {
+  args: {
+    shots: [{ src: "/icon.svg", alt: "A phone screen", width: 390, height: 844, device: "phone" }],
   },
 };
 

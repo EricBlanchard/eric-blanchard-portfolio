@@ -20,6 +20,8 @@ export interface Screenshot {
   alt: string;
   width: number;
   height: number;
+  /** Phone shots are laid out narrower than desktop ones. */
+  device?: "desktop" | "phone";
   caption?: string;
 }
 

@@ -10,3 +10,4 @@ package-lock.json
 generated/quality.json
 next-env.d.ts
 !.storybook
+content/screenshots.generated.ts

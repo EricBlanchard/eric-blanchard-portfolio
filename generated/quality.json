@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-10-14T01:03:53.449Z",
+  "generatedAt": "2026-10-14T03:41:45.521Z",
   "commit": null,
   "runUrl": null,
   "unit": {
-    "tests": 104,
-    "passed": 104,
-    "files": 22
+    "tests": 119,
+    "passed": 119,
+    "files": 24
   },
   "coverage": {
     "lines": 100,
-    "statements": 98.4,
-    "functions": 94,
-    "branches": 99
+    "statements": 98.7,
+    "functions": 94.9,
+    "branches": 99.1
   },
   "stories": {
-    "count": 38,
-    "components": 14
+    "count": 41,
+    "components": 15
   },
   "e2e": {
     "tests": 53,
@@ -26,7 +26,7 @@
     "violations": 0
   },
   "lighthouse": {
-    "performance": 0.98,
+    "performance": 0.97,
     "accessibility": 1,
     "bestPractices": 1,
     "seo": 1
