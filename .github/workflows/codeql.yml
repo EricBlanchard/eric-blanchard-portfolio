@@ -6,6 +6,8 @@ on:
     branches: [main]
   schedule:
     - cron: "41 11 * * 3"
+  # Run it by hand from the Actions tab.
+  workflow_dispatch:
 
 permissions:
   # CodeQL reads its own workflow run to label and upload results.
