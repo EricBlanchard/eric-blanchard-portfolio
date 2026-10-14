@@ -55,13 +55,30 @@ pull request ─▶ lint, types, format ─▶ unit + story tests (coverage) ─
 
 ## Contact form
 
-`/contact` sends messages from the browser through [EmailJS](https://www.emailjs.com), to whatever address the EmailJS template sends to. The SDK only loads when someone presses **Send message**.
+`/contact` sends messages from the browser through [EmailJS](https://www.emailjs.com). The recipient is set in the EmailJS template, not in the page. The SDK only loads when someone presses **Send message**.
 
-1. In EmailJS, add an email service (your deleptual.ca mailbox or SendGrid) and note its **Service ID**.
-2. Create a template. Set **To Email** to `eric.blanchard@deleptual.ca` and **Reply To** to `{{reply_to}}`. The form fills `{{from_name}}`, `{{reply_to}}`, `{{company}}`, `{{topic}}` and `{{message}}`, for example with the subject `Portfolio: {{topic}} from {{from_name}}`.
-3. Under **Account → Security**, restrict the allowed origins to `https://ericblanchard.ca` (plus `http://localhost:3000` if you want to send from your machine).
-4. Add GitHub repository **variables** (not secrets) `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID` and `EMAILJS_PUBLIC_KEY`. Only the deploy job uses them.
-5. To try it locally, put the same values in `.env.local` as `NEXT_PUBLIC_EMAILJS_SERVICE_ID`, `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` and `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`.
+### EmailJS template
+
+| Field      | Value                                     |
+| ---------- | ----------------------------------------- |
+| Subject    | `Portfolio: {{topic}} from {{from_name}}` |
+| To Email   | `eric.blanchard@deleptual.ca`             |
+| From Name  | `{{from_name}}`                           |
+| From Email | Use Default Email Address                 |
+| Reply To   | `{{reply_to}}`                            |
+
+The form sends exactly these variables: `{{from_name}}`, `{{reply_to}}`, `{{company}}`, `{{topic}}` and `{{message}}`. Anything else in the template (such as `{{name}}` or `{{title}}` from EmailJS's starter template) arrives blank.
+
+Under **Account → Security**, restrict allowed origins to `https://ericblanchard.ca` (add `http://localhost:3000` to test locally).
+
+### Where the IDs go
+
+The service ID, template ID and public key are **not secrets**: they end up in the page's JavaScript, and EmailJS limits their use by allowed origin. They're needed when the site is **built**, which happens in GitHub Actions. Put them in one place:
+
+- **GitHub** (simplest): repository **variables** `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID`, `EMAILJS_PUBLIC_KEY`.
+- **Netlify**: site environment variables `NEXT_PUBLIC_EMAILJS_SERVICE_ID`, `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID`, `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`, with values for **all deploy contexts**. Builds run by the Netlify CLI use the Local development context.
+
+GitHub values take effect only when set, so they never blank out Netlify's. For local testing, put the `NEXT_PUBLIC_` names in `.env.local`.
 
 Spam protection: a hidden honeypot field, EmailJS's headless-browser blocking, a 30-second per-browser rate limit, and the origin allowlist. If the form can't send, it shows the email address instead.
 
