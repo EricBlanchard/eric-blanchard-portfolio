@@ -2,9 +2,9 @@
   "$comment": "Shot list for the portfolio. See screenshots/README.md. Viewports: desktop 1440x900, phone 390x844, both at 2x. Every shot needs alt text before it can be imported.",
   "apps": {
     "fleet-pulse": {
-      "baseUrl": "",
+      "baseUrl": "https://enurgen-portfolio.netlify.app",
       "signIn": false,
-      "note": "Set baseUrl to the hosted demo. Synthetic data, nothing to hide.",
+      "note": "Hosted demo. Synthetic data, nothing to hide. Update baseUrl if the Netlify site is renamed.",
       "shots": [
         {
           "file": "asset-manager",
@@ -83,7 +83,9 @@
     "step-contest": {
       "baseUrl": "",
       "signIn": true,
-      "vars": { "contestId": "" },
+      "vars": {
+        "contestId": ""
+      },
       "note": "Use a demo contest, and list real names in screenshots/redactions.local.json so they're swapped for demo names. Set vars.contestId to that contest's id.",
       "shots": [
         {
@@ -171,9 +173,24 @@
       "manual": true,
       "note": "Unity: capture in the editor or a build (Game view screenshot or Unity Recorder), save PNGs into screenshots/inbox/hexploration/ with these names, then write the alt text.",
       "shots": [
-        { "file": "world", "device": "desktop", "alt": "", "caption": "" },
-        { "file": "gameplay", "device": "desktop", "alt": "", "caption": "" },
-        { "file": "editor-tooling", "device": "desktop", "alt": "", "caption": "" }
+        {
+          "file": "world",
+          "device": "desktop",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "file": "gameplay",
+          "device": "desktop",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "file": "editor-tooling",
+          "device": "desktop",
+          "alt": "",
+          "caption": ""
+        }
       ]
     }
   }
