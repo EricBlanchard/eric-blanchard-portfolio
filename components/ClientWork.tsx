@@ -18,14 +18,21 @@ export function ClientWork({ engagements }: { engagements: readonly ClientEngage
             <div className="flex flex-col gap-4 md:col-span-8">
               {e.detail && <p className="prose-measure text-muted">{e.detail}</p>}
               {e.stack.length > 0 && <TagList items={e.stack} label={`${e.client} technology`} />}
+              {e.href && (
+                <p>
+                  <a className="link" href={e.href}>
+                    Visit {new URL(e.href).hostname.replace(/^www\./, "")}
+                  </a>
+                </p>
+              )}
             </div>
           </li>
         ))}
       </ul>
       <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
         <p className="prose-measure">
-          These are internal tools, so there&rsquo;s nothing public to show. I&rsquo;m happy to walk
-          through them on a call.
+          Most of these are internal tools, so there&rsquo;s nothing public to show. I&rsquo;m happy
+          to walk through them on a call.
         </p>
         <ButtonLink href="/contact" variant="quiet">
           Book a walkthrough

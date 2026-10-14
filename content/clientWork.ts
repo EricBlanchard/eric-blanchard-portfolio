@@ -1,6 +1,6 @@
 /**
- * Client work. These are internal tools, so there's nothing public to link to or
- * screenshot; each entry offers a walkthrough on a call instead.
+ * Client work built through Deleptual. Most of it is internal tools with nothing public to
+ * show, so those offer a walkthrough on a call; public work links to the live site.
  */
 export interface ClientEngagement {
   client: string;
@@ -8,6 +8,8 @@ export interface ClientEngagement {
   /** Leave empty to keep the entry to one line. */
   detail: string;
   stack: string[];
+  /** The live site, for public work. */
+  href?: string;
 }
 
 export const clientWork: ClientEngagement[] = [
@@ -22,8 +24,16 @@ export const clientWork: ClientEngagement[] = [
     client: "Moniker Partners",
     what: "Retreat budget calculator",
     detail:
-      "Turns a prospect's retreat plans into a budget, then emails the estimate to Moniker with the prospect copied in, so both sides start from the same numbers.",
-    stack: ["JavaScript", "EmailJS", "SendGrid"],
+      "Turns a prospect's retreat plans into a budget, pricing the flights through a flight API, then emails the estimate to Moniker with the prospect copied in, so both sides start from the same numbers.",
+    stack: ["React", "Firebase", "Flight API", "EmailJS", "SendGrid"],
+  },
+  {
+    client: "Spectronix",
+    what: "Website for a vision-systems company",
+    detail:
+      "The public site for Spectronix's multi-sensor vision systems, which detect events in real time for corrections, policing and healthcare. Rive animations show how the technology works, and the demo requests go out through EmailJS and SendGrid.",
+    stack: ["React", "Rive", "Firestore", "CDN", "EmailJS", "SendGrid"],
+    href: "https://spectronix.ca",
   },
   {
     client: "UHN",

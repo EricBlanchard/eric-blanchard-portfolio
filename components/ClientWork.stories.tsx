@@ -30,3 +30,23 @@ export const OneLineEntry: Story = {
     await expect(within(canvasElement).queryByRole("list", { name: /technology/ })).toBeNull();
   },
 };
+
+export const PublicSite: Story = {
+  args: {
+    engagements: [
+      {
+        client: "Spectronix",
+        what: "Website for a vision-systems company",
+        detail: "A public site.",
+        stack: ["React", "Rive"],
+        href: "https://spectronix.ca",
+      },
+    ],
+  },
+  play: async ({ canvasElement }) => {
+    // Public work links to the live site by its plain hostname.
+    await expect(
+      within(canvasElement).getByRole("link", { name: "Visit spectronix.ca" }),
+    ).toHaveAttribute("href", "https://spectronix.ca");
+  },
+};

@@ -42,10 +42,7 @@ export default function Home() {
       <section aria-labelledby="work" className="scroll-mt-6 py-16">
         <Container>
           <SectionHeading id="work" title="Selected work">
-            <p>
-              Studio projects and the apps I build for myself. Each one links to a write-up of the
-              decisions behind it.
-            </p>
+            <p>Studio projects and the apps I build for myself.</p>
           </SectionHeading>
           <ProjectIndex projects={projects} />
         </Container>

@@ -71,29 +71,32 @@ export function pipelineSteps(q: QualityReport): PipelineStep[] {
   ];
 }
 
+/** The pipeline as a numbered list: one row per step, with its tools and live result. */
 export function Pipeline({ quality }: { quality: QualityReport }) {
   const steps = pipelineSteps(quality);
   return (
-    <ol className="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+    <ol className="border-b border-line">
       {steps.map((step, i) => (
-        <li key={step.title} className="flex flex-col gap-3 bg-paper p-5 sm:p-6">
-          <div className="flex items-baseline gap-3">
-            <span className="display text-4xl text-spruce" aria-hidden="true">
-              {i + 1}
-            </span>
+        <li
+          key={step.title}
+          className="grid grid-cols-[3rem_1fr] gap-x-4 gap-y-3 border-t border-line py-6 sm:grid-cols-[4rem_1fr] md:grid-cols-12 md:gap-x-8"
+        >
+          <span
+            className="display text-4xl leading-none text-spruce tabular-nums md:col-span-1"
+            aria-hidden="true"
+          >
+            {String(i + 1).padStart(2, "0")}
+          </span>
+          <div className="flex flex-col gap-1 md:col-span-7">
             <h3 className="text-lg font-semibold leading-tight">{step.title}</h3>
+            <p className="prose-measure text-muted">{step.body}</p>
           </div>
-          <p className="text-[0.95rem] text-muted">{step.body}</p>
-          <div className="mt-auto flex flex-col gap-3">
-            <p className="text-sm">
+          <div className="col-start-2 flex flex-col gap-1 text-sm md:col-span-4 md:col-start-auto">
+            <p>
               <span className="text-muted">Tools: </span>
               {step.tools}
             </p>
-            {step.result && (
-              <p className="border-t border-line pt-3 text-sm font-semibold tabular-nums">
-                {step.result}
-              </p>
-            )}
+            {step.result && <p className="font-semibold tabular-nums">{step.result}</p>}
           </div>
         </li>
       ))}

@@ -9,13 +9,13 @@ export const projects: Project[] = [
   {
     slug: "fleet-pulse",
     title: "Fleet Pulse",
-    kind: "Personal",
+    kind: "Portfolio",
     status: "Live",
     years: "2026",
     role: "Design and engineering",
     summary:
-      "Role-based performance dashboards for a fleet of solar and battery sites, on ClickHouse, packaged with Docker for cloud or on-prem.",
-    lede: "Asset managers, PV engineers, operations and executives look at the same fleet and need different answers. Fleet Pulse gives each of them a dashboard built around their decisions, on a synthetic fleet of utility-scale solar and BESS sites across Canada and the US.",
+      "Role-based performance dashboards for a fleet of solar and battery sites. A portfolio piece built to learn ClickHouse and the big-data tools around it.",
+    lede: "Asset managers, PV engineers, operations and executives look at the same fleet and need different answers. Fleet Pulse gives each of them a dashboard built around their decisions, on a synthetic fleet of utility-scale solar and BESS sites across Canada and the US. I built it to learn new technology by using it for real: ClickHouse for time-series telemetry, a GraphQL API over it, deck.gl for the map, and Docker so the same stack runs in the cloud or on-prem.",
     stack: [
       "Next.js 16",
       "TypeScript",
@@ -216,7 +216,7 @@ export const projects: Project[] = [
     years: "2026",
     role: "Design and engineering",
     summary:
-      "A private household app for two phones: shared lists, tasks, people and a morning digest, built as an installable PWA.",
+      "Danielle + Eric = Daric. A private household app for our two phones: shared lists, tasks, people and a morning digest, built as an installable PWA.",
     lede: "Daric is a small, private home for our household. It replaced a handful of apps with one that does exactly what we need, and it is built so that adding a new part takes minutes.",
     stack: [
       "Next.js 16",
@@ -299,39 +299,6 @@ export const projects: Project[] = [
     screenshots: screenshotsFor("hexploration"),
     links: [{ label: "Deleptual", href: "https://deleptual.ca" }],
     relevance: ["games"],
-  },
-  {
-    slug: "ai-development-workflow",
-    title: "AI development workflow",
-    kind: "Workflow",
-    status: "In use",
-    years: "2026",
-    role: "Design and engineering",
-    summary:
-      "How I use Claude Code with Unity and Notion: specialised agents, project rules and MCP connections, with tests and CI as the final word.",
-    lede: "AI is one of my tools, not a replacement for judgement. This is the setup I use across my projects, including this site, and the guardrails that keep it honest.",
-    stack: ["Claude Code", "MCP", "Unity", "Notion", "GitHub Actions"],
-    highlights: [
-      "Specialised agents with their own context: a level designer, a balance tuner and a feedback specialist, coordinated with explicit handoffs.",
-      "Project rules live in the repository (AGENTS.md, prompt files and the .claude directory), so every session starts with the same conventions.",
-      "MCP connections let the agent read and edit the Unity scene and the Notion design wiki directly instead of working from pasted context.",
-      "Nothing merges because an AI wrote it. Type checks, tests, accessibility checks and performance budgets run in CI on every change, and I review every diff.",
-    ],
-    caseStudy: [
-      {
-        type: "list",
-        heading: "The loop",
-        items: [
-          "Write down the intent in the design wiki or an issue.",
-          "Let the right agent draft the change with the project's rules loaded.",
-          "Run the tests locally and read the diff.",
-          "Open a pull request; CI decides whether it can merge.",
-        ],
-      },
-    ],
-    screenshots: screenshotsFor("ai-development-workflow"),
-    links: [],
-    relevance: ["consulting", "energy", "games", "product"],
   },
 ];
 

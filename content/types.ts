@@ -1,4 +1,4 @@
-export type ProjectKind = "Client work" | "Studio" | "Personal" | "Workflow";
+export type ProjectKind = "Client work" | "Studio" | "Personal" | "Portfolio";
 
 export type ProjectStatus = "Live" | "In development" | "In use" | "Private";
 
