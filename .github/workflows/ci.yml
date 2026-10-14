@@ -162,12 +162,13 @@ jobs:
         if: steps.netlify.outputs.ready == 'true'
         env:
           # Contact form settings. Public by design: they end up in the page's JavaScript,
-          # and EmailJS restricts their use by allowed origin. They can live either in these
-          # GitHub variables or in Netlify's environment variables. Only the deploy build
+          # and EmailJS restricts their use by allowed origin. They can live in GitHub (as
+          # variables or secrets, with or without the NEXT_PUBLIC_ prefix, at repository or
+          # environment level) or in Netlify's environment variables. Only the deploy build
           # gets them, so the verify job's tests stay deterministic.
-          EMAILJS_SERVICE_ID: ${{ vars.EMAILJS_SERVICE_ID }}
-          EMAILJS_TEMPLATE_ID: ${{ vars.EMAILJS_TEMPLATE_ID }}
-          EMAILJS_PUBLIC_KEY: ${{ vars.EMAILJS_PUBLIC_KEY }}
+          EMAILJS_SERVICE_ID: ${{ vars.EMAILJS_SERVICE_ID || secrets.EMAILJS_SERVICE_ID || vars.NEXT_PUBLIC_EMAILJS_SERVICE_ID || secrets.NEXT_PUBLIC_EMAILJS_SERVICE_ID }}
+          EMAILJS_TEMPLATE_ID: ${{ vars.EMAILJS_TEMPLATE_ID || secrets.EMAILJS_TEMPLATE_ID || vars.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || secrets.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID }}
+          EMAILJS_PUBLIC_KEY: ${{ vars.EMAILJS_PUBLIC_KEY || secrets.EMAILJS_PUBLIC_KEY || vars.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || secrets.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           IS_PROD: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
@@ -177,6 +178,20 @@ jobs:
           if [ -n "$EMAILJS_SERVICE_ID" ]; then export NEXT_PUBLIC_EMAILJS_SERVICE_ID="$EMAILJS_SERVICE_ID"; fi
           if [ -n "$EMAILJS_TEMPLATE_ID" ]; then export NEXT_PUBLIC_EMAILJS_TEMPLATE_ID="$EMAILJS_TEMPLATE_ID"; fi
           if [ -n "$EMAILJS_PUBLIC_KEY" ]; then export NEXT_PUBLIC_EMAILJS_PUBLIC_KEY="$EMAILJS_PUBLIC_KEY"; fi
+          # Say which settings GitHub supplied (never their values), so a form that can't
+          # send is explained here rather than discovered on the live site.
+          missing=()
+          for name in SERVICE_ID TEMPLATE_ID PUBLIC_KEY; do
+            var="EMAILJS_$name"
+            if [ -z "${!var}" ]; then missing+=("EMAILJS_$name"); fi
+          done
+          if [ ${#missing[@]} -eq 0 ]; then
+            echo "Contact form: EmailJS settings supplied by GitHub." >> "$GITHUB_STEP_SUMMARY"
+          else
+            msg="Contact form: ${missing[*]} not found in GitHub variables or secrets. The build will use Netlify's NEXT_PUBLIC_EMAILJS_* values if they are set there; otherwise the form shows the email address instead of sending."
+            echo "::warning::$msg"
+            echo "$msg" >> "$GITHUB_STEP_SUMMARY"
+          fi
           args=(deploy --build --json --message "${GITHUB_SHA::7} via GitHub Actions")
           if [ "$IS_PROD" = "true" ]; then
             args+=(--prod)

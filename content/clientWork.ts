@@ -37,8 +37,9 @@ export const clientWork: ClientEngagement[] = [
   },
   {
     client: "UHN",
-    what: "Internal tools",
-    detail: "",
-    stack: [],
+    what: "Program platform for clients and admins",
+    detail:
+      "A platform built around private client data. Admins and users each manage their own side of it, and users are guided through UHN's programs step by step. Built before LLMs were part of the toolkit.",
+    stack: ["React", "Firestore"],
   },
 ];

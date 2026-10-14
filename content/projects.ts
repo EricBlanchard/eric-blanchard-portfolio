@@ -91,7 +91,7 @@ export const projects: Project[] = [
   {
     slug: "studio-simulator",
     title: "Studio simulator",
-    kind: "Personal",
+    kind: "Classroom aid",
     status: "In use",
     years: "2025 to now",
     role: "Design and engineering",
