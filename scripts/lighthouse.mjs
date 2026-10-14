@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 /**
  * Runs Lighthouse against the production build and enforces the performance budgets.
- * Three runs per page; the median run (by performance score) is the one that counts.
+ * Three runs per page. Each budget is checked against the median of that number across the
+ * runs, as Lighthouse recommends, so one noisy run can't pass or fail a page on its own.
+ * The median run (by performance score) is the report that gets published.
  * The CPU slowdown is calibrated to this machine first (lib/lighthouseCalibration.ts), so a
  * slow CI runner and a fast laptop measure the same simulated phone.
  * Writes reports/lighthouse/manifest.json for scripts/collect-quality.mjs.
@@ -61,17 +63,21 @@ function median(runs) {
   return sorted[Math.floor(sorted.length / 2)];
 }
 
-function check(path, lhr) {
+/** Middle value of a list of numbers; NaN if none are numbers. */
+function middle(values) {
+  const sorted = values.filter((v) => typeof v === "number").sort((a, b) => a - b);
+  return sorted.length ? sorted[Math.floor(sorted.length / 2)] : Number.NaN;
+}
+
+function check(path, lhrs) {
   const failures = [];
   for (const [id, min] of Object.entries(BUDGETS.categories)) {
-    const score = lhr.categories[id]?.score;
-    if (typeof score !== "number" || score < min)
-      failures.push(`${path}: ${id} ${score} is below ${min}`);
+    const score = middle(lhrs.map((lhr) => lhr.categories[id]?.score));
+    if (!(score >= min)) failures.push(`${path}: ${id} ${score} is below ${min}`);
   }
   for (const [id, max] of Object.entries(BUDGETS.audits)) {
-    const value = lhr.audits[id]?.numericValue;
-    if (typeof value !== "number" || value > max)
-      failures.push(`${path}: ${id} ${Math.round(value)} is over ${max}`);
+    const value = middle(lhrs.map((lhr) => lhr.audits[id]?.numericValue));
+    if (!(value <= max)) failures.push(`${path}: ${id} ${Math.round(value)} is over ${max}`);
   }
   return failures;
 }
@@ -186,7 +192,12 @@ try {
     console.log(
       `${path.padEnd(22)} performance ${Math.round(s.performance * 100)}  accessibility ${Math.round(s.accessibility * 100)}  best practices ${Math.round(s["best-practices"] * 100)}  SEO ${Math.round(s.seo * 100)}`,
     );
-    failures.push(...check(path, representative.lhr));
+    failures.push(
+      ...check(
+        path,
+        runs.map((run) => run.lhr),
+      ),
+    );
   }
 
   writeFileSync(`${OUT}/manifest.json`, JSON.stringify(manifest, null, 2));

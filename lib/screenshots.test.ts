@@ -23,10 +23,12 @@ describe("the committed shot list", () => {
     expect(shotListProblems(committed)).toEqual([]);
   });
 
-  it("never publishes Daric's private screens", () => {
-    const shots = committed.apps.daric?.shots ?? [];
-    const where = shots.flatMap((s) => [s.path ?? "", s.source ?? ""]).join(" ");
-    expect(where).not.toMatch(/people|weight|gym|notes|today|home|groceries|tasks|sign-in/);
+  it("keeps Daric's Hardware, Notes and People screens private", () => {
+    const daric = committed.apps.daric!;
+    const where = daric.shots.flatMap((s) => [s.path ?? "", s.source ?? ""]).join(" ");
+    expect(where).not.toMatch(/hardware|notes|people/);
+    for (const screen of ["05-hardware", "07-notes", "08-people"])
+      expect(daric.skip).toContain(`daric/${screen}.png`);
   });
 
   it("captures Fleet Pulse panels with data, not page headers", () => {

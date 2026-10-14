@@ -102,6 +102,14 @@ export const generatedScreenshots: Record<string, Screenshot[]> = {
       "caption": "The leaderboard: totals, best days and the gap to the person ahead."
     },
     {
+      "src": "/work/step-contest/dashboard.webp",
+      "alt": "Step Contest home on a phone: buttons to start a new contest or join one with a code, and the running October Walk Off with its progress.",
+      "width": 780,
+      "height": 1688,
+      "device": "phone",
+      "caption": "Home: your contests at a glance."
+    },
+    {
       "src": "/work/step-contest/leaderboard.webp",
       "alt": "The contest leaderboard on a phone, ranking five walkers by total steps with each person's best day and their gap to the leader.",
       "width": 780,
@@ -126,6 +134,14 @@ export const generatedScreenshots: Record<string, Screenshot[]> = {
       "caption": "Missed days are listed, so you can catch up."
     },
     {
+      "src": "/work/step-contest/settings.webp",
+      "alt": "Contest settings on a phone: a six-letter invite code with a button to share it, above the contest's details.",
+      "width": 780,
+      "height": 1688,
+      "device": "phone",
+      "caption": "Inviting people: a short code, a link or a QR code."
+    },
+    {
       "src": "/work/step-contest/new-contest.webp",
       "alt": "Creating a contest on a phone: name, description, start and end dates, time zone, maximum participants and catch-up days.",
       "width": 780,
@@ -144,6 +160,46 @@ export const generatedScreenshots: Record<string, Screenshot[]> = {
   ],
   "daric": [
     {
+      "src": "/work/daric/sign-in.webp",
+      "alt": "Daric's sign-in screen on a phone: the app's house logo and a single Continue with Google button, noting that only the two household accounts can get in.",
+      "width": 375,
+      "height": 812,
+      "device": "phone",
+      "caption": "Private by design: two accounts, one button."
+    },
+    {
+      "src": "/work/daric/home.webp",
+      "alt": "Daric's home screen on a phone: a greeting, then a tile for each module, starting with Today, Groceries, Hardware and Tasks.",
+      "width": 749,
+      "height": 1624,
+      "device": "phone",
+      "caption": "Every part of Daric is a module with its own tile."
+    },
+    {
+      "src": "/work/daric/today.webp",
+      "alt": "Daric's Today page on a phone: the date, a prompt to show the weather, and the short list of today's tasks.",
+      "width": 749,
+      "height": 1624,
+      "device": "phone",
+      "caption": "Today mirrors the 6am digest."
+    },
+    {
+      "src": "/work/daric/groceries.webp",
+      "alt": "The shared grocery list on a phone: items still to grab, each showing who added it, above the items already in the cart.",
+      "width": 749,
+      "height": 1624,
+      "device": "phone",
+      "caption": "One shared list. It syncs live between both phones."
+    },
+    {
+      "src": "/work/daric/tasks.webp",
+      "alt": "Shared tasks on a phone, split into short term and long term, filterable by whose they are.",
+      "width": 749,
+      "height": 1624,
+      "device": "phone",
+      "caption": "Tasks for either of us, or anyone."
+    },
+    {
       "src": "/work/daric/garden.webp",
       "alt": "Daric's garden module on a phone: this week's garlic planting steps for the coming season, under a photo of garlic bulbs ready to plant.",
       "width": 749,
@@ -158,6 +214,22 @@ export const generatedScreenshots: Record<string, Screenshot[]> = {
       "height": 1624,
       "device": "phone",
       "caption": "Growing guides are written for our climate zone."
+    },
+    {
+      "src": "/work/daric/gym.webp",
+      "alt": "Daric's gym module on a phone before any workouts: buttons to copy history, import a workout or browse exercises.",
+      "width": 749,
+      "height": 1624,
+      "device": "phone",
+      "caption": "Workouts can be written by Claude and imported."
+    },
+    {
+      "src": "/work/daric/weight.webp",
+      "alt": "The weight module on a phone: a form to add a weigh-in, the latest reading with weekly change and distance to goal, and a progress chart against a straight line to the goal.",
+      "width": 749,
+      "height": 1624,
+      "device": "phone",
+      "caption": "A number and a date. The chart does the rest."
     },
     {
       "src": "/work/daric/settings.webp",

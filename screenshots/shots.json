@@ -134,7 +134,7 @@
       "signIn": true,
       "manual": true,
       "folders": ["steps"],
-      "note": "Taken by hand from a demo contest (Alex, Blake, Dev and Avery are demo accounts). Log steps is left out until its button stops covering the date field; contest settings is left out because it shows a live invite code; the full-page captures are too tall for the gallery.",
+      "note": "Taken by hand from a demo contest (Alex, Blake, Dev and Avery are demo accounts, and WALK24 is a demo invite code). Log steps is left out until its button stops covering the date field; the full-page captures are too tall for the gallery.",
       "skip": [
         "steps/desktop/01-dashboard.png",
         "steps/desktop/02-dashboard-past-contests.png",
@@ -145,10 +145,8 @@
         "steps/desktop/09-contest-settings.png",
         "steps/desktop/10-new-contest.png",
         "steps/desktop/11-join-with-code.png",
-        "steps/mobile/01-dashboard.png",
         "steps/mobile/05-contest-full-page.png",
-        "steps/mobile/08-log-steps.png",
-        "steps/mobile/09-contest-settings.png"
+        "steps/mobile/08-log-steps.png"
       ],
       "shots": [
         {
@@ -157,6 +155,13 @@
           "device": "desktop",
           "alt": "A step contest on a desktop screen: a button to log today's steps, then standings for five people with their step totals, best days and how far each is behind the leader.",
           "caption": "The leaderboard: totals, best days and the gap to the person ahead."
+        },
+        {
+          "file": "dashboard",
+          "source": "steps/mobile/01-dashboard.png",
+          "device": "phone",
+          "alt": "Step Contest home on a phone: buttons to start a new contest or join one with a code, and the running October Walk Off with its progress.",
+          "caption": "Home: your contests at a glance."
         },
         {
           "file": "leaderboard",
@@ -180,6 +185,13 @@
           "caption": "Missed days are listed, so you can catch up."
         },
         {
+          "file": "settings",
+          "source": "steps/mobile/09-contest-settings.png",
+          "device": "phone",
+          "alt": "Contest settings on a phone: a six-letter invite code with a button to share it, above the contest's details.",
+          "caption": "Inviting people: a short code, a link or a QR code."
+        },
+        {
           "file": "new-contest",
           "source": "steps/mobile/10-new-contest.png",
           "device": "phone",
@@ -199,25 +211,53 @@
       "baseUrl": "",
       "signIn": true,
       "manual": true,
-      "note": "Private household app, taken by hand. Only screens with nothing personal on them are published. The others show real names, photos, notes or body weight; recapture them with names swapped (screenshots/redactions.local.json) before taking them out of skip.",
+      "note": "Private household app, taken by hand. Hardware, Notes and People stay out; the full-page and extra weight captures repeat other shots.",
       "skip": [
         "daric/00-contact-sheet.png",
-        "daric/01-sign-in.png",
-        "daric/02-home.png",
         "daric/02-home-full.png",
-        "daric/03-today.png",
         "daric/03-today-full.png",
-        "daric/04-groceries.png",
         "daric/05-hardware.png",
-        "daric/06-tasks.png",
         "daric/07-notes.png",
         "daric/08-people.png",
-        "daric/09-gym.png",
-        "daric/10-weight.png",
         "daric/10-weight-full.png",
         "daric/10b-weight-chart.png"
       ],
       "shots": [
+        {
+          "file": "sign-in",
+          "source": "daric/01-sign-in.png",
+          "device": "phone",
+          "alt": "Daric's sign-in screen on a phone: the app's house logo and a single Continue with Google button, noting that only the two household accounts can get in.",
+          "caption": "Private by design: two accounts, one button."
+        },
+        {
+          "file": "home",
+          "source": "daric/02-home.png",
+          "device": "phone",
+          "alt": "Daric's home screen on a phone: a greeting, then a tile for each module, starting with Today, Groceries, Hardware and Tasks.",
+          "caption": "Every part of Daric is a module with its own tile."
+        },
+        {
+          "file": "today",
+          "source": "daric/03-today.png",
+          "device": "phone",
+          "alt": "Daric's Today page on a phone: the date, a prompt to show the weather, and the short list of today's tasks.",
+          "caption": "Today mirrors the 6am digest."
+        },
+        {
+          "file": "groceries",
+          "source": "daric/04-groceries.png",
+          "device": "phone",
+          "alt": "The shared grocery list on a phone: items still to grab, each showing who added it, above the items already in the cart.",
+          "caption": "One shared list. It syncs live between both phones."
+        },
+        {
+          "file": "tasks",
+          "source": "daric/06-tasks.png",
+          "device": "phone",
+          "alt": "Shared tasks on a phone, split into short term and long term, filterable by whose they are.",
+          "caption": "Tasks for either of us, or anyone."
+        },
         {
           "file": "garden",
           "source": "daric/11-garden.png",
@@ -231,6 +271,20 @@
           "device": "phone",
           "alt": "A garlic growing guide for southern Ontario on a phone: what to do right now, when roots will form, and a button to start this year's crop.",
           "caption": "Growing guides are written for our climate zone."
+        },
+        {
+          "file": "gym",
+          "source": "daric/09-gym.png",
+          "device": "phone",
+          "alt": "Daric's gym module on a phone before any workouts: buttons to copy history, import a workout or browse exercises.",
+          "caption": "Workouts can be written by Claude and imported."
+        },
+        {
+          "file": "weight",
+          "source": "daric/10-weight.png",
+          "device": "phone",
+          "alt": "The weight module on a phone: a form to add a weigh-in, the latest reading with weekly change and distance to goal, and a progress chart against a straight line to the goal.",
+          "caption": "A number and a date. The chart does the rest."
         },
         {
           "file": "settings",

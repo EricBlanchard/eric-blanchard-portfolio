@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Screenshot } from "@/content/types";
-import { groupDesktopShots } from "./ScreenshotGallery";
+import { cssWidth, groupDesktopShots, phoneColumns } from "./ScreenshotGallery";
 
 const shot = (src: string, width: number): Screenshot => ({
   src,
@@ -26,5 +26,20 @@ describe("groupDesktopShots", () => {
 
   it("handles no shots", () => {
     expect(groupDesktopShots([])).toEqual([]);
+  });
+});
+
+describe("phoneColumns", () => {
+  it("avoids a lonely last row", () => {
+    expect([4, 5, 6, 7, 8, 9, 10].map(phoneColumns)).toEqual([4, 3, 3, 4, 4, 3, 4]);
+  });
+});
+
+describe("cssWidth", () => {
+  it("halves desktop captures and reads a phone capture's scale from its width", () => {
+    expect(cssWidth({ device: "desktop", width: 2400 })).toBe(1200);
+    expect(cssWidth({ device: "phone", width: 780 })).toBe(390);
+    expect(cssWidth({ device: "phone", width: 375 })).toBe(375);
+    expect(cssWidth({ device: "phone", width: 1170 })).toBe(390);
   });
 });
