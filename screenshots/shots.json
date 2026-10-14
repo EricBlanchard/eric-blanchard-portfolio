@@ -4,7 +4,7 @@
     "fleet-pulse": {
       "baseUrl": "https://enurgen-portfolio.netlify.app",
       "signIn": false,
-      "note": "Hosted demo with synthetic data. Each shot is one panel, picked by its heading, so images show the data rather than the page header. Update baseUrl if the Netlify site is renamed.",
+      "note": "Hosted demo with synthetic data. Each shot is one panel, picked by its heading, so images show the data rather than the page header. Update baseUrl if the Netlify site is renamed. Panels with wide tables use a 1920 px window; the capture warns if a table is still cut off.",
       "shots": [
         {
           "file": "headline-numbers",
@@ -52,7 +52,8 @@
           "device": "desktop",
           "section": "What to do next",
           "alt": "Recommended actions for the asset manager: which sites to wash and which faults to investigate, with what each is worth.",
-          "caption": "What to do next: wash, wait or investigate, priced in dollars."
+          "caption": "What to do next: wash, wait or investigate, priced in dollars.",
+          "width": 1920
         },
         {
           "file": "performance-heatmap",
@@ -68,7 +69,8 @@
           "device": "desktop",
           "section": "Where each site's shortfall goes",
           "alt": "For each site, the gap between expected and actual energy split into loss causes, including the part the model can't explain.",
-          "caption": "Where each site's shortfall goes, including what the model can't explain."
+          "caption": "Where each site's shortfall goes, including what the model can't explain.",
+          "width": 1920
         },
         {
           "file": "dispatch-queue",
@@ -76,7 +78,8 @@
           "device": "desktop",
           "section": "Dispatch queue",
           "alt": "The operations dispatch queue: equipment problems ranked by revenue at stake per day, marked as still down or recovered.",
-          "caption": "Operations: the dispatch queue, ranked by revenue at stake."
+          "caption": "Operations: the dispatch queue, ranked by revenue at stake.",
+          "width": 1920
         },
         {
           "file": "soiling-rain",
@@ -88,11 +91,11 @@
           "click": "a[href^='/sites/']"
         },
         {
-          "file": "dispatch-queue-phone",
+          "file": "right-now-phone",
           "path": "/?view=operations",
           "device": "phone",
-          "section": "Dispatch queue",
-          "alt": "The dispatch queue on a phone.",
+          "section": "Right now",
+          "alt": "The operations view's headline numbers on a phone: problems to act on now with the revenue at stake, inverters down, strings offline and inverters not reporting.",
           "caption": "The dashboards work on a phone too."
         }
       ]

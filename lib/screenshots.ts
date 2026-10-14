@@ -21,6 +21,8 @@ export interface Shot {
   section?: string;
   /** Click this selector before capturing, e.g. to open the first item in a list. */
   click?: string;
+  /** Window width in CSS pixels, for panels whose tables need more room than the default. */
+  width?: number;
 }
 
 export interface AppShots {
@@ -66,6 +68,11 @@ export function shotListProblems(list: ShotList): string[] {
         problems.push(`${where}: section can't be empty.`);
       if (shot.section && shot.fullPage)
         problems.push(`${where}: use section or fullPage, not both.`);
+      if (
+        shot.width !== undefined &&
+        !(Number.isInteger(shot.width) && shot.width >= 320 && shot.width <= 3840)
+      )
+        problems.push(`${where}: width must be a whole number of pixels from 320 to 3840.`);
     }
   }
   return problems;
@@ -91,6 +98,14 @@ export function resolvePath(path: string, vars: Record<string, string> = {}): st
 export function shotUrl(baseUrl: string, path: string): string {
   if (!baseUrl.trim()) throw new Error("Set baseUrl in screenshots/shots.json first.");
   return `${baseUrl.replace(/\/+$/, "")}${path}`;
+}
+
+/** The window size for a shot: the device's, with an optional wider (or narrower) width. */
+export function viewportFor(shot: Pick<Shot, "device" | "width">): {
+  width: number;
+  height: number;
+} {
+  return { ...VIEWPORTS[shot.device], ...(shot.width ? { width: shot.width } : {}) };
 }
 
 /** Width to store an image at: never enlarged, capped per device. */

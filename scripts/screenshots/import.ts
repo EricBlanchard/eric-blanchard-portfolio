@@ -7,7 +7,7 @@
  *
  *   npm run screenshots:import
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import sharp from "sharp";
 import {
@@ -76,6 +76,18 @@ for (const [slug, app] of Object.entries(list.apps)) {
     }
   }
   if (entries.length > 0) result[slug] = entries;
+
+  // Remove images for shots that are no longer in the list, so they don't ship unused.
+  const dir = join("public", "work", slug);
+  if (existsSync(dir)) {
+    const listed = new Set(app.shots.map((shot) => `${shot.file}.webp`));
+    for (const name of readdirSync(dir)) {
+      if (name.endsWith(".webp") && !listed.has(name)) {
+        rmSync(join(dir, name));
+        console.log(`removed ${slug}/${name} (no longer in shots.json)`);
+      }
+    }
+  }
 }
 
 // A TypeScript module rather than JSON, so every tool (Next.js, Vite, Node, Playwright)

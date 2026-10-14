@@ -8,6 +8,7 @@ import {
   resolvePath,
   shotListProblems,
   shotUrl,
+  viewportFor,
   type ShotList,
 } from "./screenshots";
 
@@ -69,6 +70,17 @@ describe("shotListProblems", () => {
     ]);
   });
 
+  it("checks widths", () => {
+    const problems = shotListProblems(
+      app([
+        { file: "a", path: "/", device: "desktop", alt: "x", width: 100 },
+        { file: "b", path: "/", device: "desktop", alt: "x", width: 1920.5 },
+        { file: "c", path: "/", device: "desktop", alt: "x", width: 1920 },
+      ]),
+    );
+    expect(problems).toHaveLength(2);
+  });
+
   it("doesn't need paths for manual shots", () => {
     expect(shotListProblems(app([{ file: "world", device: "desktop", alt: "" }], true))).toEqual(
       [],
@@ -97,6 +109,13 @@ describe("resolvePath and shotUrl", () => {
     expect(shotUrl("https://a.example/", "/demo")).toBe("https://a.example/demo");
     expect(shotUrl("https://a.example", "/?view=x")).toBe("https://a.example/?view=x");
     expect(() => shotUrl("", "/")).toThrow("Set baseUrl");
+  });
+});
+
+describe("viewportFor", () => {
+  it("uses the device size unless a width is given", () => {
+    expect(viewportFor({ device: "phone" })).toEqual({ width: 390, height: 844 });
+    expect(viewportFor({ device: "desktop", width: 1920 })).toEqual({ width: 1920, height: 900 });
   });
 });
 
