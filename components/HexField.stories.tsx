@@ -10,7 +10,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "The hero map: generated terrain with a solar array, rendered as server-side SVG. The reveal is pure CSS and switches off under reduced motion.",
+          "The hero map: generated terrain with a solar array, rendered as server-side SVG. The map itself is static; a curtain and an amber panel layer reveal it using only transform and opacity, so the browser animates them off the main thread. Both are skipped under reduced motion.",
       },
     },
   },
@@ -21,9 +21,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   play: async ({ canvasElement }) => {
-    const svg = canvasElement.querySelector("svg");
-    await expect(svg).toHaveAttribute("aria-hidden", "true");
+    const field = canvasElement.querySelector('[data-testid="hex-field"]');
+    await expect(field).toHaveAttribute("aria-hidden", "true");
     await expect(canvasElement.querySelectorAll('[data-kind="panel"]').length).toBeGreaterThan(0);
+    await expect(canvasElement.querySelector(".hex-curtain")).not.toBeNull();
   },
 };
 
@@ -32,6 +33,7 @@ export const Small: Story = { args: { cols: 6, rows: 5, seed: 42 } };
 export const Still: Story = {
   args: { animate: false },
   play: async ({ canvasElement }) => {
-    await expect(canvasElement.querySelector(".hex-still")).not.toBeNull();
+    await expect(canvasElement.querySelector(".hex-curtain")).toBeNull();
+    await expect(canvasElement.querySelector(".hex-charge")).toBeNull();
   },
 };

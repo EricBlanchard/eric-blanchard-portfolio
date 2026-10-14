@@ -18,8 +18,6 @@ export interface HexTile {
   /** Panel tiles draw a smaller module on top of the ground hex. */
   module: string | null;
   kind: TileKind;
-  /** Reveal delay in ms, sweeping left to right like sunrise. */
-  delay: number;
 }
 
 export interface HexFieldOptions {
@@ -28,8 +26,6 @@ export interface HexFieldOptions {
   /** Distance from centre to corner. */
   size: number;
   seed: number;
-  /** Total length of the reveal sweep in ms. */
-  sweep?: number;
 }
 
 const SQRT3 = Math.sqrt(3);
@@ -117,22 +113,13 @@ export function classifyTile(
   return n > 0.62 ? "forest" : "land";
 }
 
-export function buildHexField({
-  cols,
-  rows,
-  size,
-  seed,
-  sweep = 1400,
-}: HexFieldOptions): HexTile[] {
+export function buildHexField({ cols, rows, size, seed }: HexFieldOptions): HexTile[] {
   if (cols < 1 || rows < 1) return [];
-  const { width } = fieldSize(cols, rows, size);
   const tiles: HexTile[] = [];
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       const { x, y } = offsetToPixel(col, row, size);
       const kind = classifyTile(col, row, cols, rows, seed);
-      // Panels light up after the land, so the array "charges" last.
-      const base = Math.round((x / width) * sweep);
       tiles.push({
         key: `${col}:${row}`,
         col,
@@ -142,7 +129,6 @@ export function buildHexField({
         points: hexCorners(x, y, size * 0.94),
         module: kind === "panel" ? hexCorners(x, y, size * 0.62) : null,
         kind,
-        delay: kind === "panel" ? base + Math.round(sweep * 0.45) : base,
       });
     }
   }
@@ -151,4 +137,24 @@ export function buildHexField({
 
 function round(n: number): number {
   return Math.round(n * 10) / 10;
+}
+
+/**
+ * The field as SVG markup: the whole map, and the panel modules alone (for the reveal layer).
+ * Built only from numbers and the fixed terrain names, so it is safe to insert as HTML.
+ */
+export function hexFieldMarkup(tiles: HexTile[]): { map: string; panels: string } {
+  const polygon = (points: string, kind: TileKind) =>
+    `<polygon points="${points}" data-kind="${kind}" class="hex-tile"></polygon>`;
+  let map = "";
+  let panels = "";
+  for (const tile of tiles) {
+    if (tile.module) {
+      map += `<g>${polygon(tile.points, "land")}${polygon(tile.module, "panel")}</g>`;
+      panels += `<polygon points="${tile.module}"></polygon>`;
+    } else {
+      map += polygon(tile.points, tile.kind);
+    }
+  }
+  return { map, panels };
 }

@@ -49,7 +49,7 @@ export function pipelineSteps(q: QualityReport): PipelineStep[] {
     },
     {
       title: "Performance budget",
-      body: "Lighthouse runs against the production build. A score below budget fails the pipeline.",
+      body: "Lighthouse runs against the production build, with its CPU slowdown calibrated to the machine so every run simulates the same phone. A score below budget fails the pipeline.",
       tools: "Lighthouse",
       result:
         q.lighthouse.performance === null

@@ -75,9 +75,22 @@ test("the page never scrolls sideways", async ({ page }) => {
 test("the hero map stays still for people who prefer reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  const animation = await page
-    .locator(".hex-tile")
-    .first()
-    .evaluate((el) => getComputedStyle(el).animationName);
-  expect(animation).toBe("none");
+  await expect(page.locator(".hex-curtain")).toBeHidden();
+  await expect(page.locator(".hex-charge")).toBeHidden();
+});
+
+test("the hero map reveal only animates transform and opacity", async ({ page }) => {
+  await page.goto("/");
+  const animated = await page.evaluate(() =>
+    document
+      .getAnimations()
+      .flatMap((a) => (a.effect as KeyframeEffect).getKeyframes())
+      .flatMap((k) =>
+        Object.keys(k).filter(
+          (p) => !["offset", "easing", "composite", "computedOffset"].includes(p),
+        ),
+      ),
+  );
+  expect(animated.length).toBeGreaterThan(0);
+  expect(new Set(animated)).toEqual(new Set(["transform", "opacity"]));
 });

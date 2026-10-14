@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildHexField,
+  hexFieldMarkup,
   classifyTile,
   fieldSize,
   hash2,
@@ -90,19 +91,6 @@ describe("buildHexField", () => {
     for (const p of panels) expect(p.module).not.toBeNull();
   });
 
-  it("lights panels after the ground around them", () => {
-    const tiles = buildHexField(options);
-    const panel = tiles.find((t) => t.kind === "panel")!;
-    const neighbour = tiles.find((t) => t.row === panel.row && t.kind !== "panel")!;
-    expect(panel.delay).toBeGreaterThan(neighbour.delay);
-  });
-
-  it("sweeps from left to right", () => {
-    const row = buildHexField(options).filter((t) => t.row === 0 && t.kind !== "panel");
-    const delays = row.map((t) => t.delay);
-    expect([...delays].sort((a, b) => a - b)).toEqual(delays);
-  });
-
   it("classifies every kind of terrain somewhere", () => {
     const kinds = new Set<string>();
     for (let seed = 0; seed < 10; seed++) {
@@ -110,5 +98,23 @@ describe("buildHexField", () => {
         for (let c = 0; c < 10; c++) kinds.add(classifyTile(c, r, 10, 9, seed));
     }
     expect(kinds).toEqual(new Set(["water", "land", "forest", "panel"]));
+  });
+});
+
+describe("hexFieldMarkup", () => {
+  const tiles = buildHexField({ cols: 10, rows: 9, size: 24, seed: 7 });
+  const { map, panels } = hexFieldMarkup(tiles);
+
+  it("draws every tile, with panel modules on their own layer too", () => {
+    const modules = tiles.filter((t) => t.module).length;
+    expect(map.match(/<polygon /g)).toHaveLength(tiles.length + modules);
+    expect(panels.match(/<polygon /g)).toHaveLength(modules);
+  });
+
+  it("contains nothing but numbers and known terrain names", () => {
+    for (const html of [map, panels]) {
+      const values = [...html.matchAll(/="([^"]*)"/g)].map((m) => m[1]);
+      for (const v of values) expect(v).toMatch(/^([\d., -]+|water|land|forest|panel|hex-tile)$/);
+    }
   });
 });

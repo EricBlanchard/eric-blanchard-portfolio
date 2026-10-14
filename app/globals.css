@@ -113,11 +113,7 @@
     text-decoration-thickness: 2px;
   }
 
-  /* Hex field tiles. Each tile reveals once, staggered by --d. */
-  .hex-tile {
-    animation: hex-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
-    animation-delay: var(--d, 0ms);
-  }
+  /* Hex field. The map is static; the reveal layers move on the GPU only (see HexField). */
   .hex-tile[data-kind="water"] {
     fill: var(--water);
   }
@@ -129,43 +125,55 @@
   }
   .hex-tile[data-kind="panel"] {
     fill: var(--panel);
-    animation-name: hex-in, panel-charge;
-    animation-duration: 700ms, 900ms;
-    animation-delay: var(--d, 0ms), calc(var(--d, 0ms) + 500ms);
-    animation-fill-mode: both, forwards;
   }
 
-  @keyframes hex-in {
+  /* Amber copy of the panels: shown as the curtain passes, then fades so the array "charges". */
+  .hex-charge {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    fill: var(--sun);
+    opacity: 0;
+    animation: hex-charge 900ms ease-in 1300ms both;
+  }
+
+  /*
+   * A curtain in the page colour with a soft leading edge, 1.5x the map's width. It starts with
+   * the edge just off the left of the map, covering it, and slides until it has cleared the right.
+   */
+  .hex-curtain {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 150%;
+    background: linear-gradient(to right, transparent, var(--paper) 33.4%);
+    transform: translateX(66.667%);
+    animation: hex-sweep 1500ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  @keyframes hex-sweep {
     from {
-      opacity: 0;
-      transform: translateY(6px);
+      transform: translateX(-33.333%);
     }
     to {
+      transform: translateX(66.667%);
+    }
+  }
+
+  @keyframes hex-charge {
+    from {
       opacity: 1;
-      transform: none;
     }
-  }
-
-  @keyframes panel-charge {
-    0% {
-      fill: var(--panel);
+    to {
+      opacity: 0;
     }
-    40% {
-      fill: var(--sun);
-    }
-    100% {
-      fill: var(--panel);
-    }
-  }
-
-  .hex-still {
-    animation: none !important;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hex-tile,
-    .hex-tile[data-kind="panel"] {
-      animation: none;
+    .hex-charge,
+    .hex-curtain {
+      display: none;
     }
   }
 }
