@@ -23,6 +23,12 @@ describe("the committed shot list", () => {
     expect(paths.some((p) => p?.startsWith("/people") || p?.startsWith("/weight"))).toBe(false);
   });
 
+  it("captures Fleet Pulse panels with data, not page headers", () => {
+    const shots = committed.apps["fleet-pulse"]?.shots ?? [];
+    expect(shots.length).toBeGreaterThan(0);
+    for (const shot of shots) expect(shot.section, shot.file).toBeTruthy();
+  });
+
   it("keeps studio simulator captures to public pages", () => {
     expect(committed.apps["studio-simulator"]?.signIn).toBe(false);
   });
@@ -48,6 +54,19 @@ describe("shotListProblems", () => {
     expect(problems.join("\n")).toMatch(/used twice/);
     expect(problems.join("\n")).toMatch(/"desktop" or "phone"/);
     expect(problems.join("\n")).toMatch(/start with "\/"/);
+  });
+
+  it("rejects an empty section, and section with fullPage", () => {
+    const problems = shotListProblems(
+      app([
+        { file: "a", path: "/", device: "desktop", alt: "x", section: " " },
+        { file: "b", path: "/", device: "desktop", alt: "x", section: "Map", fullPage: true },
+      ]),
+    );
+    expect(problems).toEqual([
+      "demo/a: section can't be empty.",
+      "demo/b: use section or fullPage, not both.",
+    ]);
   });
 
   it("doesn't need paths for manual shots", () => {
