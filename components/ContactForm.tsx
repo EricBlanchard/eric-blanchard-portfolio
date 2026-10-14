@@ -105,6 +105,11 @@ export function ContactForm({ email, send = sendWithEmailJs }: ContactFormProps)
       form.reset();
       setStatus({ kind: "sent", email: input.email.trim() });
     } catch (error) {
+      if (!(error instanceof NotConfiguredError)) {
+        // EmailJS explains refusals (e.g. a disconnected email service) in `text`.
+        const { status, text } = (error ?? {}) as { status?: number; text?: string };
+        console.error("Contact form: EmailJS didn't send the message.", status, text ?? error);
+      }
       setStatus({ kind: "error", notConfigured: error instanceof NotConfiguredError });
     }
   }
