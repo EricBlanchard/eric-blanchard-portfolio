@@ -48,3 +48,8 @@ next-env.d.ts
 /public/reports
 /storybook-static
 *storybook.log
+
+# screenshot tooling: raw captures, browser profiles and local name redactions stay local
+/screenshots/inbox
+/screenshots/redactions.local.json
+/.screenshots

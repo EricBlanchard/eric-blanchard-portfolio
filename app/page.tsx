@@ -1,9 +1,11 @@
 import { ButtonLink } from "@/components/ButtonLink";
+import { ClientWork } from "@/components/ClientWork";
 import { Container } from "@/components/Container";
 import { HexField } from "@/components/HexField";
 import { Pipeline } from "@/components/Pipeline";
 import { ProjectIndex } from "@/components/ProjectIndex";
 import { SectionHeading } from "@/components/SectionHeading";
+import { clientWork } from "@/content/clientWork";
 import { projects } from "@/content/projects";
 import { site, studio } from "@/content/site";
 import { quality } from "@/lib/quality-data";
@@ -41,11 +43,20 @@ export default function Home() {
         <Container>
           <SectionHeading id="work" title="Selected work">
             <p>
-              Client work, studio projects and the apps I build for myself. Each one links to a
-              write-up of the decisions behind it.
+              Studio projects and the apps I build for myself. Each one links to a write-up of the
+              decisions behind it.
             </p>
           </SectionHeading>
           <ProjectIndex projects={projects} />
+        </Container>
+      </section>
+
+      <section aria-labelledby="clients" className="py-16">
+        <Container>
+          <SectionHeading id="clients" title="Client work">
+            <p>Tools I&rsquo;ve built through Deleptual for businesses and organizations.</p>
+          </SectionHeading>
+          <ClientWork engagements={clientWork} />
         </Container>
       </section>
 

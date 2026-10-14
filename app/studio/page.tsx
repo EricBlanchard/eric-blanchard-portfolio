@@ -1,7 +1,9 @@
 import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ClientWork } from "@/components/ClientWork";
 import { Container } from "@/components/Container";
+import { clientWork } from "@/content/clientWork";
 import { projects } from "@/content/projects";
 import { studio } from "@/content/site";
 
@@ -12,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default function StudioPage() {
-  const studioWork = projects.filter((p) => p.kind === "Client work" || p.kind === "Studio");
+  const studioWork = projects.filter((p) => p.kind === "Studio");
   return (
     <>
       <Container className="py-14 md:py-20">
@@ -47,6 +49,15 @@ export default function StudioPage() {
               </li>
             ))}
           </ul>
+        </Container>
+      </section>
+
+      <section aria-labelledby="studio-clients" className="border-t border-line py-14">
+        <Container>
+          <h2 id="studio-clients" className="display mb-10 text-5xl sm:text-6xl">
+            Client work
+          </h2>
+          <ClientWork engagements={clientWork} />
         </Container>
       </section>
 

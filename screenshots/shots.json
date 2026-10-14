@@ -1,0 +1,180 @@
+{
+  "$comment": "Shot list for the portfolio. See screenshots/README.md. Viewports: desktop 1440x900, phone 390x844, both at 2x. Every shot needs alt text before it can be imported.",
+  "apps": {
+    "fleet-pulse": {
+      "baseUrl": "",
+      "signIn": false,
+      "note": "Set baseUrl to the hosted demo. Synthetic data, nothing to hide.",
+      "shots": [
+        {
+          "file": "asset-manager",
+          "path": "/?view=asset-manager",
+          "device": "desktop",
+          "alt": "Fleet Pulse asset manager dashboard: revenue earned and lost by site and cause, next to a map of the fleet.",
+          "caption": "Asset manager: is the portfolio earning what it should?"
+        },
+        {
+          "file": "engineer",
+          "path": "/?view=engineer",
+          "device": "desktop",
+          "alt": "PV engineer dashboard with a performance-index heatmap for every site and day.",
+          "caption": "PV engineer: why is this site underperforming?"
+        },
+        {
+          "file": "operations",
+          "path": "/?view=operations",
+          "device": "desktop",
+          "alt": "Operations dashboard with a dispatch queue ranked by revenue at stake per day.",
+          "caption": "Operations: what needs attention right now?"
+        },
+        {
+          "file": "executive",
+          "path": "/?view=executive",
+          "device": "desktop",
+          "alt": "Executive dashboard comparing revenue and energy with a P50 budget, with a month-end forecast.",
+          "caption": "Executive: are we on track, and where is the risk?"
+        },
+        {
+          "file": "site-detail",
+          "path": "/?view=asset-manager",
+          "click": "a[href^='/sites/']",
+          "device": "desktop",
+          "alt": "Detail page for a single solar site, with its strings, inverters and clipping.",
+          "caption": "One site in detail."
+        },
+        {
+          "file": "operations-phone",
+          "path": "/?view=operations",
+          "device": "phone",
+          "alt": "The operations dashboard on a phone.",
+          "caption": "The dashboards work on a phone too."
+        }
+      ]
+    },
+    "studio-simulator": {
+      "baseUrl": "https://studio-simulator.netlify.app",
+      "signIn": false,
+      "note": "The /demo page is public and has no student data. Signed-in views are left out on purpose; add them only from a demo game instance.",
+      "shots": [
+        {
+          "file": "demo",
+          "path": "/demo",
+          "device": "desktop",
+          "alt": "Studio Simulator's public demo page, introducing the semester-long game studio simulation.",
+          "caption": "The public demo page."
+        },
+        {
+          "file": "demo-full",
+          "path": "/demo",
+          "device": "desktop",
+          "fullPage": true,
+          "alt": "The whole demo page, including the guided tour of how a week in the simulation works.",
+          "caption": "The guided tour walks through a week of the simulation."
+        },
+        {
+          "file": "demo-phone",
+          "path": "/demo",
+          "device": "phone",
+          "alt": "The Studio Simulator demo page on a phone.",
+          "caption": ""
+        }
+      ]
+    },
+    "step-contest": {
+      "baseUrl": "",
+      "signIn": true,
+      "vars": { "contestId": "" },
+      "note": "Use a demo contest, and list real names in screenshots/redactions.local.json so they're swapped for demo names. Set vars.contestId to that contest's id.",
+      "shots": [
+        {
+          "file": "dashboard",
+          "path": "/dashboard",
+          "device": "phone",
+          "alt": "Step contest home screen on a phone, listing the contests you're in.",
+          "caption": "Home: your contests at a glance."
+        },
+        {
+          "file": "leaderboard",
+          "path": "/contests/{contestId}",
+          "device": "phone",
+          "alt": "A contest leaderboard on a phone, with step totals, streaks and the gap to the person above.",
+          "caption": "The leaderboard updates the moment anyone logs."
+        },
+        {
+          "file": "log",
+          "path": "/contests/{contestId}/log",
+          "device": "phone",
+          "alt": "Logging a day's steps on a phone: a date, a number and an optional screenshot.",
+          "caption": "Logging a day: two taps and a number."
+        },
+        {
+          "file": "feed",
+          "path": "/contests/{contestId}/feed",
+          "device": "phone",
+          "alt": "The contest activity feed on a phone.",
+          "caption": "The feed keeps the group talking."
+        },
+        {
+          "file": "leaderboard-desktop",
+          "path": "/contests/{contestId}",
+          "device": "desktop",
+          "alt": "The contest leaderboard on a desktop screen, with the cumulative race chart.",
+          "caption": "On a bigger screen, the race chart shows the whole contest."
+        }
+      ]
+    },
+    "daric": {
+      "baseUrl": "",
+      "signIn": true,
+      "note": "Private household data: keep to lists, tasks and the garden. People and Weight are left out on purpose. Use redactions.local.json for any names that show.",
+      "shots": [
+        {
+          "file": "home",
+          "path": "/",
+          "device": "phone",
+          "alt": "Daric's home screen on a phone: a tile for each module.",
+          "caption": "Every part of Daric is a module with its own tile."
+        },
+        {
+          "file": "today",
+          "path": "/today",
+          "device": "phone",
+          "alt": "Daric's Today page on a phone, with the weather, today's tasks and reminders.",
+          "caption": "Today mirrors the 6am digest."
+        },
+        {
+          "file": "grocery",
+          "path": "/grocery",
+          "device": "phone",
+          "alt": "A shared grocery list on a phone.",
+          "caption": "Lists sync live between both phones."
+        },
+        {
+          "file": "tasks",
+          "path": "/tasks",
+          "device": "phone",
+          "alt": "Shared tasks on a phone, colour coded by who they're assigned to.",
+          "caption": "Tasks for either of us, or anyone."
+        },
+        {
+          "file": "garden",
+          "path": "/garden",
+          "device": "phone",
+          "alt": "The garden module on a phone, tracking crops by growth stage.",
+          "caption": "The garden module."
+        }
+      ]
+    },
+    "hexploration": {
+      "baseUrl": "",
+      "signIn": false,
+      "manual": true,
+      "note": "Unity: capture in the editor or a build (Game view screenshot or Unity Recorder), save PNGs into screenshots/inbox/hexploration/ with these names, then write the alt text.",
+      "shots": [
+        { "file": "world", "device": "desktop", "alt": "", "caption": "" },
+        { "file": "gameplay", "device": "desktop", "alt": "", "caption": "" },
+        { "file": "editor-tooling", "device": "desktop", "alt": "", "caption": "" }
+      ]
+    }
+  }
+}

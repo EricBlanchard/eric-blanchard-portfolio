@@ -51,7 +51,7 @@ export const studio = {
   practice: [
     {
       title: "Web apps for clients",
-      body: "Small, durable tools that do one job well: calculators, lead flows and internal dashboards, built in Next.js and TypeScript and handed over with tests and a deploy pipeline.",
+      body: "Internal tools that do one job well, from a meal-prep business's weekly operations to a lead-generating budget calculator, built in Next.js and handed over with a deploy pipeline.",
     },
     {
       title: "Games",

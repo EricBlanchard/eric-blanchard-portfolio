@@ -1,3 +1,4 @@
+import { screenshotsFor } from "./screenshots";
 import type { Project } from "./types";
 
 /**
@@ -6,43 +7,135 @@ import type { Project } from "./types";
  */
 export const projects: Project[] = [
   {
-    slug: "solar-performance-dashboard",
-    title: "Solar performance dashboard",
+    slug: "fleet-pulse",
+    title: "Fleet Pulse",
     kind: "Personal",
-    status: "In development",
+    status: "Live",
     years: "2026",
     role: "Design and engineering",
     summary:
-      "A Next.js and TypeScript dashboard for exploring large solar-performance datasets without the page slowing down.",
-    lede: "I am building this to work on the problems energy software teams deal with daily: very large time-series tables, charts that have to stay responsive, and numbers that people make decisions on. It is a working project, so this page will grow with it.",
-    stack: ["Next.js", "TypeScript", "SQL", "Data visualization", "Vitest"],
+      "Role-based performance dashboards for a fleet of solar and battery sites, on ClickHouse, packaged with Docker for cloud or on-prem.",
+    lede: "Asset managers, PV engineers, operations and executives look at the same fleet and need different answers. Fleet Pulse gives each of them a dashboard built around their decisions, on a synthetic fleet of utility-scale solar and BESS sites across Canada and the US.",
+    stack: [
+      "Next.js 16",
+      "TypeScript",
+      "ClickHouse",
+      "GraphQL",
+      "deck.gl",
+      "Docker",
+      "Storybook",
+      "Vitest",
+      "GitHub Actions",
+    ],
     highlights: [
-      "Queries are aggregated in SQL before they reach the browser, so a chart never receives more points than it can draw.",
-      "Charts are built for reading: shared axes, consistent units, and direct labels instead of legends where possible.",
-      "The same testing and CI setup as this site: typed end to end, with every component in Storybook.",
+      "Four dashboards, one per role, each built around a question: is the portfolio earning what it should, why is this site underperforming, what needs attention now, and are we on track.",
+      "Loss attribution explains the gap between expected and actual output from telemetry alone, and is tested against the generator's answer key: fleet-wide losses land within 8% of the truth, with under 0.5% left unexplained.",
+      "Wash-or-wait advice weighs the soiling a wash would recover against its cost and the next heavy rain, and flags outages worth a truck roll.",
+      "The same ClickHouse image and numbered, forward-only migrations run on a laptop, a cloud droplet or an on-prem Linux host. Nothing on the dashboards calls a third-party service.",
+      "CI runs four jobs in parallel: lint, types and unit tests; every Storybook story in Chromium with axe checks; SQL tests against a ClickHouse service container; and the full build.",
     ],
     caseStudy: [
       {
-        type: "text",
-        heading: "Why this project",
-        body: [
-          "Solar and battery operators work with data at a scale where naive dashboards fall over. Plant output, irradiance and expected yield arrive as long time series, and the useful questions involve comparing them across sites and seasons.",
-          "The goal is a dashboard that answers those questions quickly and honestly, and a codebase that another engineer could pick up tomorrow.",
+        type: "table",
+        heading: "One fleet, four views",
+        intro: "Each role gets the question it asks, and only the data that answers it.",
+        columns: ["Role", "The question", "What it shows"],
+        rows: [
+          [
+            "Asset manager",
+            "Is this portfolio earning what it should?",
+            "Revenue earned and lost by site and cause, wash-or-wait payback, the fleet map",
+          ],
+          [
+            "PV engineer",
+            "Why is this underperforming?",
+            "A performance-index heatmap, where each shortfall goes, strings below their siblings",
+          ],
+          [
+            "Operations",
+            "What needs attention right now?",
+            "A dispatch queue ranked by revenue at stake, with rain and curtailment for context",
+          ],
+          [
+            "Executive",
+            "Are we on track, and where's the risk?",
+            "Revenue and energy against a P50 budget, a month-end forecast, a budget-to-actual bridge",
+          ],
         ],
       },
       {
         type: "list",
-        heading: "What it is designed to do",
+        heading: "Synthetic data with an answer key",
+        intro:
+          "Real fleet data is never public, so the fleet is generated, and the generator keeps score.",
         items: [
-          "Compare measured output with expected yield across sites and date ranges.",
-          "Keep interactions fast on large tables by pushing aggregation into the database.",
-          "Make every chart explain its units, time zone and data window.",
+          "Physics from sun position to inverter output: clear-sky irradiance, cloud cover, module temperature, string DC and inverter clipping.",
+          "Telemetry carries only what SCADA would report, with measurement noise and communication outages.",
+          "Planted faults (inverter outages, curtailment, soiling, offline and degraded strings) come with the energy each one really cost.",
+          "Every value is a pure function of seed, device and time, so any slice of the data can be regenerated exactly.",
+        ],
+      },
+      {
+        type: "text",
+        heading: "Built to be checked",
+        body: [
+          "Every component is in Storybook and tested in a real browser with accessibility checks. The site explains itself too: a How it's built page reads live table sizes and compression from ClickHouse's system tables, and a Who it's for page writes down each role's assumptions so they can be tested.",
         ],
       },
     ],
-    screenshots: [],
+    screenshots: screenshotsFor("fleet-pulse"),
     links: [],
     relevance: ["energy", "consulting", "product"],
+  },
+  {
+    slug: "studio-simulator",
+    title: "Studio simulator",
+    kind: "Personal",
+    status: "In use",
+    years: "2025 to now",
+    role: "Design and engineering",
+    summary:
+      "A business simulation that runs alongside the game production course I teach, used by students every week of the semester.",
+    lede: "Game production students learn to make games, but rarely feel the business pressure around them. In this simulation, each team runs a studio: it hires staff, pays salaries, weathers market events and invests in rival studios, week by week through the semester.",
+    stack: [
+      "Next.js 15",
+      "React 19",
+      "Firebase Auth",
+      "Firestore",
+      "React Hook Form",
+      "Zod",
+      "DigitalOcean Spaces",
+      "Netlify",
+    ],
+    highlights: [
+      "It runs in production with live student data during the semester, so every schema change is additive and backwards compatible, following written migration guidelines.",
+      "Each class runs in its own game instance, isolated from the others and archived at the end of term.",
+      "The instructor can roll back any weekly event, so a mistake becomes a lesson rather than a lost grade.",
+      "Hireable employees come with generated resumes and stats by role and seniority, from junior programmers to senior audio designers.",
+      "Document quality (market research, pitch, game plan) feeds the production multipliers, so planning has a visible effect on results.",
+    ],
+    caseStudy: [
+      {
+        type: "list",
+        heading: "What a week looks like",
+        items: [
+          "Salaries are paid and production advances based on each studio's team and its documents.",
+          "A market event lands, and every studio feels it differently.",
+          "Students hire, fire and assign staff, and invest network points in other studios.",
+          "The instructor reviews the results and can roll anything back before it counts.",
+        ],
+      },
+      {
+        type: "text",
+        heading: "Why build it",
+        body: [
+          "Static gamification (badges, points, leaderboards) doesn't teach production. A living economy does: decisions have knock-on effects across budget, staffing, production and investment, the way they do in a real studio.",
+        ],
+      },
+    ],
+    screenshots: screenshotsFor("studio-simulator"),
+    links: [],
+    relevance: ["product", "games"],
   },
   {
     slug: "step-contest",
@@ -110,7 +203,7 @@ export const projects: Project[] = [
         ],
       },
     ],
-    screenshots: [],
+    screenshots: screenshotsFor("step-contest"),
     links: [],
     relevance: ["product", "consulting"],
   },
@@ -173,37 +266,9 @@ export const projects: Project[] = [
         ],
       },
     ],
-    screenshots: [],
+    screenshots: screenshotsFor("daric"),
     links: [],
     relevance: ["product"],
-  },
-  {
-    slug: "retreat-budget-calculator",
-    title: "Retreat budget calculator",
-    kind: "Client work",
-    status: "Live",
-    years: "2026",
-    role: "Built through Deleptual",
-    summary:
-      "A budget calculator for Moniker Partners that turns a prospect's retreat plans into an estimate and a qualified lead.",
-    lede: "Moniker Partners plans company retreats. They needed prospects to get a realistic budget on their own, and needed those estimates to arrive in their inbox as leads they could act on.",
-    stack: ["JavaScript", "EmailJS", "SendGrid", "Custom domain email"],
-    highlights: [
-      "The call to action emails the full estimate to Moniker and copies the person who filled in the form, so both sides start from the same numbers.",
-      "Email goes out through EmailJS and SendGrid from an authenticated sending domain, which keeps it out of spam folders.",
-    ],
-    caseStudy: [
-      {
-        type: "text",
-        heading: "The job",
-        body: [
-          "A calculator is only useful to a business if it leads somewhere. This one does the arithmetic a prospect would otherwise ask for on a call, then hands Moniker a written estimate with the prospect already copied in.",
-        ],
-      },
-    ],
-    screenshots: [],
-    links: [],
-    relevance: ["consulting"],
   },
   {
     slug: "hexploration",
@@ -230,7 +295,7 @@ export const projects: Project[] = [
         ],
       },
     ],
-    screenshots: [],
+    screenshots: screenshotsFor("hexploration"),
     links: [{ label: "Deleptual", href: "https://deleptual.ca" }],
     relevance: ["games"],
   },
@@ -263,7 +328,7 @@ export const projects: Project[] = [
         ],
       },
     ],
-    screenshots: [],
+    screenshots: screenshotsFor("ai-development-workflow"),
     links: [],
     relevance: ["consulting", "energy", "games", "product"],
   },
