@@ -140,15 +140,22 @@ jobs:
       - name: Build and deploy to Netlify
         id: deploy
         env:
-          # Contact form. Public values (EmailJS limits them by allowed origin); set as
-          # repository variables. Only the deploy build gets them, so tests stay deterministic.
-          NEXT_PUBLIC_EMAILJS_SERVICE_ID: ${{ vars.EMAILJS_SERVICE_ID }}
-          NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: ${{ vars.EMAILJS_TEMPLATE_ID }}
-          NEXT_PUBLIC_EMAILJS_PUBLIC_KEY: ${{ vars.EMAILJS_PUBLIC_KEY }}
+          # Contact form settings. Public by design: they end up in the page's JavaScript,
+          # and EmailJS restricts their use by allowed origin. They can live either in these
+          # GitHub variables or in Netlify's environment variables. Only the deploy build
+          # gets them, so the verify job's tests stay deterministic.
+          EMAILJS_SERVICE_ID: ${{ vars.EMAILJS_SERVICE_ID }}
+          EMAILJS_TEMPLATE_ID: ${{ vars.EMAILJS_TEMPLATE_ID }}
+          EMAILJS_PUBLIC_KEY: ${{ vars.EMAILJS_PUBLIC_KEY }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           IS_PROD: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
         run: |
+          # Pass the GitHub values on only when set, so empty ones never mask Netlify's.
+          # (if blocks, not `&&`: Actions runs bash with -e, so a false test would end the step.)
+          if [ -n "$EMAILJS_SERVICE_ID" ]; then export NEXT_PUBLIC_EMAILJS_SERVICE_ID="$EMAILJS_SERVICE_ID"; fi
+          if [ -n "$EMAILJS_TEMPLATE_ID" ]; then export NEXT_PUBLIC_EMAILJS_TEMPLATE_ID="$EMAILJS_TEMPLATE_ID"; fi
+          if [ -n "$EMAILJS_PUBLIC_KEY" ]; then export NEXT_PUBLIC_EMAILJS_PUBLIC_KEY="$EMAILJS_PUBLIC_KEY"; fi
           args=(deploy --build --json --message "${GITHUB_SHA::7} via GitHub Actions")
           if [ "$IS_PROD" = "true" ]; then
             args+=(--prod)
