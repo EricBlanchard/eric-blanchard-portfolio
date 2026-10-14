@@ -2,6 +2,8 @@
 /**
  * Runs Lighthouse against the production build and enforces the performance budgets.
  * Three runs per page; the median run (by performance score) is the one that counts.
+ * The CPU slowdown is calibrated to this machine first (lib/lighthouseCalibration.ts), so a
+ * slow CI runner and a fast laptop measure the same simulated phone.
  * Writes reports/lighthouse/manifest.json for scripts/collect-quality.mjs.
  *
  * Usage: npm run build && npm run lighthouse
@@ -11,6 +13,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { setTimeout as sleep } from "node:timers/promises";
 import * as chromeLauncher from "chrome-launcher";
 import lighthouse from "lighthouse";
+import { cpuSlowdownFor, medianOf } from "../lib/lighthouseCalibration.ts";
 
 const PORT = 3300;
 const ORIGIN = `http://localhost:${PORT}`;
@@ -112,12 +115,12 @@ function stopServer(child) {
 }
 
 /** One Lighthouse run, retried when Chrome fails to record a trace (a known intermittent error). */
-async function measure(url, attempts = 3) {
+async function measure(url, settings = {}, attempts = 3) {
   for (let attempt = 1; ; attempt++) {
     const result = await lighthouse(
       url,
       { port: chrome.port, output: "html", logLevel: "error" },
-      { extends: "lighthouse:default", settings: { skipAudits: SKIP } },
+      { extends: "lighthouse:default", settings: { skipAudits: SKIP, ...settings } },
     );
     const error = result?.lhr?.runtimeError;
     if (result?.lhr && !error) return result;
@@ -137,6 +140,20 @@ try {
     chromeFlags: ["--headless=new", "--no-sandbox"],
   });
 
+  // Calibrate: read this machine's benchmark index a few times and pick the CPU slowdown.
+  const readings = [];
+  for (let i = 0; i < 3; i++) {
+    const run = await measure(ORIGIN, { onlyAudits: ["first-contentful-paint"] });
+    readings.push(run.lhr.environment.benchmarkIndex);
+  }
+  const benchmarkIndex = Math.round(medianOf(readings));
+  const cpuSlowdownMultiplier = cpuSlowdownFor(benchmarkIndex);
+  const throttling = { cpuSlowdownMultiplier };
+  console.log(
+    `This machine's benchmark index is ${benchmarkIndex} (readings ${readings.map(Math.round).join(", ")}),` +
+      ` so the CPU is slowed ${cpuSlowdownMultiplier}x (Lighthouse's default is 4x on a fast desktop).\n`,
+  );
+
   mkdirSync(OUT, { recursive: true });
   const manifest = [];
   const failures = [];
@@ -145,7 +162,7 @@ try {
     const url = `${ORIGIN}${path}`;
     const runs = [];
     await fetch(url); // warm up
-    for (let i = 0; i < RUNS; i++) runs.push(await measure(url));
+    for (let i = 0; i < RUNS; i++) runs.push(await measure(url, { throttling }));
 
     const representative = median(runs);
     const slug = path === "/" ? "home" : path.slice(1).replaceAll("/", "-");
@@ -160,6 +177,8 @@ try {
         htmlPath: `${base}.html`,
         jsonPath: `${base}.json`,
         summary: summarize(run.lhr),
+        benchmarkIndex,
+        cpuSlowdownMultiplier,
       });
     });
 

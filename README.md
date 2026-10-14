@@ -12,7 +12,7 @@ The site is its own case study. The pipeline that builds it measures it, and the
 - **Vitest** for unit tests, and Storybook stories run as browser tests via `@storybook/addon-vitest`
 - **Storybook 10**, published with the site at `/storybook`
 - **Playwright** + **axe** for end-to-end and accessibility tests, light and dark
-- **Lighthouse** with performance, accessibility and weight budgets
+- **Lighthouse** with performance, accessibility and weight budgets, its CPU slowdown calibrated to the machine running it (`lib/lighthouseCalibration.ts`)
 - **GitHub Actions** for CI/CD, **Netlify** for hosting, **Dependabot** + **CodeQL** for upkeep
 
 ## Commands
