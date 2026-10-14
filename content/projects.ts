@@ -84,7 +84,8 @@ export const projects: Project[] = [
       },
     ],
     screenshots: screenshotsFor("fleet-pulse"),
-    links: [],
+    // The Netlify site name predates the Fleet Pulse name; update this if it's renamed.
+    links: [{ label: "Open the live demo", href: "https://enurgen-portfolio.netlify.app" }],
     relevance: ["energy", "consulting", "product"],
   },
   {
