@@ -24,4 +24,15 @@ jobs:
         with:
           languages: javascript-typescript, actions
           queries: security-extended
+      # Code scanning alerts need a public repository (or GitHub Code Security on a private
+      # one). Without it the scan still runs, and its results are kept as a run artifact.
       - uses: github/codeql-action/analyze@v4
+        with:
+          upload: ${{ github.event.repository.private && 'never' || 'always' }}
+          output: codeql-results
+      - if: github.event.repository.private
+        uses: actions/upload-artifact@v5
+        with:
+          name: codeql-results
+          path: codeql-results
+          retention-days: 30

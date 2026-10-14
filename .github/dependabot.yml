@@ -14,6 +14,13 @@ updates:
       # Remove this once they do.
       - dependency-name: eslint
         update-types: [version-update:semver-major]
+      # typescript-eslint (used by eslint-config-next) doesn't support TypeScript 7 yet.
+      # Remove this once it does.
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
+      # Types follow the Node version in .nvmrc; bump both together by hand.
+      - dependency-name: "@types/node"
+        update-types: [version-update:semver-major]
     # Related packages move together so one PR is tested as a set.
     groups:
       next-and-react:
