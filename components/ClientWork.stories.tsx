@@ -50,3 +50,13 @@ export const PublicSite: Story = {
     ).toHaveAttribute("href", "https://spectronix.ca");
   },
 };
+
+export const WithoutNote: Story = {
+  args: { showNote: false },
+  play: async ({ canvasElement }) => {
+    // The intro above says it instead; the button stays.
+    const canvas = within(canvasElement);
+    await expect(canvas.queryByText(/nothing public to show/)).toBeNull();
+    await expect(canvas.getByRole("link", { name: "Book a walkthrough" })).toBeVisible();
+  },
+};

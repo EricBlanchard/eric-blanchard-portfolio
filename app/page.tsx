@@ -51,9 +51,13 @@ export default function Home() {
       <section aria-labelledby="clients" className="py-16">
         <Container>
           <SectionHeading id="clients" title="Client work">
-            <p>Tools I&rsquo;ve built through Deleptual for businesses and organizations.</p>
+            <p>
+              Tools I&rsquo;ve built through Deleptual for businesses and organizations. Most are
+              internal tools I can&rsquo;t post publicly, but I&rsquo;m happy to walk through any of
+              them on a call.
+            </p>
           </SectionHeading>
-          <ClientWork engagements={clientWork} />
+          <ClientWork engagements={clientWork} showNote={false} />
         </Container>
       </section>
 

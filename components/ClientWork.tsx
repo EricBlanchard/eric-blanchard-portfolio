@@ -2,7 +2,14 @@ import type { ClientEngagement } from "@/content/clientWork";
 import { ButtonLink } from "./ButtonLink";
 import { TagList } from "./TagList";
 
-export function ClientWork({ engagements }: { engagements: readonly ClientEngagement[] }) {
+export function ClientWork({
+  engagements,
+  showNote = true,
+}: {
+  engagements: readonly ClientEngagement[];
+  /** The line explaining why there's nothing to show; turn off when the intro already says it. */
+  showNote?: boolean;
+}) {
   return (
     <div>
       <ul className="border-b border-line">
@@ -30,10 +37,12 @@ export function ClientWork({ engagements }: { engagements: readonly ClientEngage
         ))}
       </ul>
       <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
-        <p className="prose-measure">
-          Most of these are internal tools, so there&rsquo;s nothing public to show. I&rsquo;m happy
-          to walk through them on a call.
-        </p>
+        {showNote && (
+          <p className="prose-measure">
+            Most of these are internal tools, so there&rsquo;s nothing public to show. I&rsquo;m
+            happy to walk through them on a call.
+          </p>
+        )}
         <ButtonLink href="/contact" variant="quiet">
           Book a walkthrough
         </ButtonLink>
