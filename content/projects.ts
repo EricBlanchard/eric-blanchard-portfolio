@@ -89,6 +89,68 @@ export const projects: Project[] = [
     relevance: ["energy", "consulting", "product"],
   },
   {
+    slug: "ontario-grid-capacity",
+    title: "Ontario grid capacity",
+    kind: "Personal",
+    status: "Live",
+    years: "2026",
+    role: "Design, data and engineering",
+    summary:
+      "A fast WebGL map of every Hydro One station, coloured by how much new generation it can still accept, with solar farm sites rated on a 1 km grid.",
+    lede: "Hydro One publishes how much capacity each station has and every application against it, but as PDFs with no map and no coordinates. This turns them into an answer to one question, where a new generator could still connect, and shows the source behind every number.",
+    stack: [
+      "Next.js 16",
+      "TypeScript",
+      "React Three Fiber",
+      "three.js",
+      "Zustand",
+      "Python",
+      "OpenStreetMap",
+      "Vitest",
+      "Playwright",
+    ],
+    highlights: [
+      "Free capacity is the station's published thermal capacity minus every application on it, also limited by the transformer bus upstream. That reproduces the station thermal test in Hydro One's own calculator; the map says plainly that it's a screening signal, not a guarantee.",
+      "Every value traces back to a source you can open: a page of a Hydro One PDF or an OpenStreetMap feature. Tests check that all 7,695 citations point at a real page.",
+      "The PDFs have no coordinates, so each station is placed only from evidence, best match first, and every placement is checked against how far feeders can reach. Stations that can't be placed honestly aren't drawn.",
+      "Matching applications to the IESO's contracted generation list (1,411 matches) flags capacity held by projects that most likely never got built.",
+      "All geometry is projected and triangulated at build time into a compact binary format, so the browser does no geometry work: one draw call per layer, and no GPU work at all while the map is idle.",
+    ],
+    caseStudy: [
+      {
+        type: "list",
+        heading: "Solar farm sites",
+        intro:
+          "A 1 km grid is rated for ground-mounted solar at three sizes, each with its own filter.",
+        items: [
+          "Grid: a connection close enough for that size has room for it, from a station's own feeders to a dedicated line to a transformer station for farms over 10 MW.",
+          "Land: prime farmland, wetlands, parks, protected areas and water rule a square out, and the usable share has to hold the farm at 7 acres per MW.",
+          "Unsuitable squares can be shown too, each saying why, so a near miss is as informative as a fit.",
+        ],
+      },
+      {
+        type: "list",
+        heading: "The path to the grid",
+        intro: "Open a station and the panel walks each hop the power would take.",
+        items: [
+          "The station's own feeders, then the upstream feeder and its voltage limit, minus what's already applied for on it.",
+          "The upstream transformer bus, then the transmission grid and any constraint flagged there.",
+          "Feeder routes traced along OpenStreetMap lines where they're mapped, with the distance, since feeders are limited mainly by length.",
+        ],
+      },
+      {
+        type: "text",
+        heading: "Fast, and usable without a mouse",
+        body: [
+          "First load is about 176 KB of JavaScript plus the map data, fetched in parallel; power lines and per-station details load only when needed. The station search is a full ARIA combobox, the map can be panned and zoomed from the keyboard, and status is always spelled out in text as well as colour. The end-to-end suite fails on any serious accessibility violation, on desktop and phone.",
+        ],
+      },
+    ],
+    screenshots: screenshotsFor("ontario-grid-capacity"),
+    links: [{ label: "Open the live map", href: "https://canada-energy-map.netlify.app" }],
+    relevance: ["energy", "consulting", "product"],
+  },
+  {
     slug: "studio-simulator",
     title: "Studio simulator",
     kind: "Classroom aid",

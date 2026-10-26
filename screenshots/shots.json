@@ -100,6 +100,28 @@
         }
       ]
     },
+    "ontario-grid-capacity": {
+      "baseUrl": "https://canada-energy-map.netlify.app",
+      "signIn": false,
+      "folders": ["energy-map", "grid-capacity"],
+      "note": "Public map with public data. It draws with WebGL, so capture it in your own Chrome (the script's default) rather than headless. Write alt text after looking at the images; for hand-taken shots, drop them in screenshots/inbox/energy-map/.",
+      "shots": [
+        {
+          "file": "map",
+          "path": "/",
+          "device": "desktop",
+          "alt": "",
+          "caption": ""
+        },
+        {
+          "file": "map-phone",
+          "path": "/",
+          "device": "phone",
+          "alt": "",
+          "caption": ""
+        }
+      ]
+    },
     "studio-simulator": {
       "baseUrl": "https://studio-simulator.netlify.app",
       "signIn": false,
