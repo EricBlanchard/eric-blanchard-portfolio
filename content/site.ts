@@ -59,7 +59,7 @@ export const studio = {
     },
     {
       title: "Workflow engineering",
-      body: "AI-assisted development set up properly: project rules, specialised agents, MCP connections into Unity and Notion, and CI that has the final say.",
+      body: "AI as part of the everyday workflow: project rules kept in the repository, larger jobs handed off from the desktop app or my phone, and scheduled tasks that watch for funding, competitor and policy changes.",
     },
   ],
 } as const;

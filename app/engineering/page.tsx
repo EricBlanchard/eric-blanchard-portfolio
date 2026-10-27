@@ -17,19 +17,15 @@ export const metadata: Metadata = {
 const aiPractice = [
   {
     title: "Rules live in the repository",
-    body: "AGENTS.md and prompt files give every AI session the same conventions a new teammate would get: how to test, what not to touch, where things go.",
+    body: "AGENTS.md gives every AI session the same conventions a new teammate would get: how to test, what not to touch, where things go.",
   },
   {
-    title: "Agents get a narrow job",
-    body: "On Hexploration, separate agents handle level design, balance tuning and player feedback, with a coordinator handing work between them.",
+    title: "Big jobs run while I'm away",
+    body: "I hand larger pieces of work to Claude from the desktop app and check in from my phone. It works through them in the background, and I read the results and steer it from wherever I am.",
   },
   {
-    title: "Tools, not pasted context",
-    body: "MCP connections let the agent read the Unity scene and the Notion design wiki directly, so it works from the source of truth.",
-  },
-  {
-    title: "CI has the final word",
-    body: "AI drafts; it does not approve. Every change, whoever wrote it, passes the same checks below, and I read every diff before it merges.",
+    title: "Scheduled tasks keep watch",
+    body: "Recurring tasks track what I would otherwise have to remember to check: government funding programs, competitors, and new energy proposals. The Ontario grid map's list of planned projects is updated this way every week.",
   },
 ];
 
@@ -161,11 +157,11 @@ export default function EngineeringPage() {
         <Container>
           <SectionHeading id="ai" title="AI as a tool">
             <p>
-              I use Claude Code daily, including to build this site. Here is how I keep it useful
-              and keep it honest.
+              I use Claude every day, including to build this site. Here is how it fits into the way
+              I work.
             </p>
           </SectionHeading>
-          <ul className="grid gap-x-10 gap-y-10 md:grid-cols-2">
+          <ul className="grid gap-x-10 gap-y-10 md:grid-cols-3">
             {aiPractice.map((item) => (
               <li key={item.title} className="prose-measure">
                 <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
